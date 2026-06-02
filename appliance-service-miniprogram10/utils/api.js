@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:3000/api';
+const API_BASE_URL = 'https://appliance-service-api.onrender.com';
 
 const request = (url, method, data = {}) => {
   return new Promise((resolve, reject) => {
