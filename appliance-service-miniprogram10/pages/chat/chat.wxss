@@ -1,0 +1,188 @@
+/* chat.wxss */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #F5F5F5;
+}
+
+/* 聊天消息区域 */
+.chat-messages {
+  flex: 1;
+  padding: 24rpx;
+  overflow-y: scroll;
+}
+
+.message-container {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 20rpx;
+  justify-content: flex-start;
+}
+
+.my-message {
+  flex-direction: row-reverse;
+}
+
+.avatar-container {
+  width: 15%;
+  text-align: center;
+}
+
+.avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 10rpx;
+  overflow: hidden;
+  background-color: #FFFFFF;
+  position: relative;
+  z-index: 1;
+}
+
+.avatar image {
+  width: 100%;
+  height: 100%;
+}
+
+.message-content {
+  width: 70%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.other-message .message-content {
+  align-items: flex-start;
+  margin-left: 20rpx;
+}
+
+.my-message .message-content {
+  align-items: flex-end;
+  margin-right: 20rpx;
+}
+
+.message-bubble {
+  border-radius: 10rpx;
+  padding: 20rpx;
+  display: inline-block;
+  text-align: left;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.other-message .message-bubble {
+  background-color: #0066CC;
+}
+
+.my-message .message-bubble {
+  background-color: #009933;
+}
+
+.message-text {
+  font-size: 30rpx;
+  line-height: 1.4;
+  word-break: break-all;
+  max-width: 100%;
+  color: white;
+}
+
+.message-image {
+  max-width: 360rpx;
+  border-radius: 10rpx;
+  display: block;
+}
+
+.message-wrapper {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20rpx;
+  animation: slideUp 0.3s ease-in-out;
+}
+
+.message-time {
+  display: block;
+  text-align: center;
+  font-size: 24rpx;
+  color: #999999;
+  margin-bottom: 16rpx;
+  background-color: #F0F0F0;
+  padding: 4rpx 16rpx;
+  border-radius: 12rpx;
+  align-self: center;
+  max-width: fit-content;
+}
+
+/* 底部输入区域 */
+.input-area {
+  display: flex;
+  align-items: center;
+  padding: 16rpx 24rpx;
+  background-color: #FFFFFF;
+  border-top: 1rpx solid #EEEEEE;
+}
+
+.input-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  background-color: #F5F5F5;
+  border-radius: 9999rpx;
+  padding: 0 16rpx;
+  margin-right: 24rpx;
+}
+
+.emoji-icon,
+.attach-icon {
+  width: 40rpx;
+  height: 40rpx;
+  margin: 0 8rpx;
+}
+
+.attach-icon {
+  padding: 4rpx;
+}
+
+.message-input {
+  flex: 1;
+  padding: 16rpx;
+  font-size: 28rpx;
+  color: #333333;
+  background-color: transparent;
+  min-height: 64rpx;
+  box-sizing: border-box;
+}
+
+.send-btn {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 32rpx;
+  background-color: #1E88E5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.send-btn[disabled] {
+  background-color: #CCCCCC;
+}
+
+.send-icon {
+  width: 32rpx;
+  height: 32rpx;
+}
+
+/* 动画 */
+@keyframes slideUp {
+  from {
+    transform: translateY(20rpx);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

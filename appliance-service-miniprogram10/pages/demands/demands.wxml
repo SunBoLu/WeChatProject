@@ -1,0 +1,42 @@
+<!-- demands.wxml -->
+<view class="container">
+  <!-- 页面标题 -->
+  <view class="page-header">
+    <text class="page-title">我的发布</text>
+  </view>
+  
+  <!-- 加载中 -->
+  <view wx:if="{{isLoading}}" class="loading-container">
+    <text class="loading-text">加载中...</text>
+  </view>
+  
+  <!-- 无数据提示 -->
+  <view wx:elif="{{demands.length === 0}}" class="empty-container">
+    <image src="https://p26-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/a33c806e018049f9accc4f8f874e5cc3~tplv-a9rns2rl98-image.image?lk3s=8e244e95&rcl=2026040114542862841A149A1450CE3E0A&rrcfp=f06b921b&x-expires=1777618535&x-signature=1wU7uc6n7x%2BzoVT2vyNhLIvFOao%3D" class="empty-icon"></image>
+    <text class="empty-text">暂无发布的需求</text>
+  </view>
+  
+  <!-- 需求列表 -->
+  <view wx:else class="demands-list">
+    <view wx:for="{{demands}}" wx:key="id" class="demand-item" bindtap="navigateToDetail" data-id="{{item.id}}">
+      <view class="demand-header">
+        <text class="demand-title">{{item.title}}</text>
+        <view class="demand-tag {{getTagClass(item.type)}}">{{getTagText(item.type)}}</view>
+      </view>
+      <view class="demand-description">{{item.description}}</view>
+      <view class="demand-info">
+        <view class="info-item">
+          <image src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/53595b6c57584a728fc407a8e700545c~tplv-a9rns2rl98-image.image?lk3s=8e244e95&rcl=2026040114542862841A149A1450CE3E0A&rrcfp=f06b921b&x-expires=1777618534&x-signature=ZScEoZRgROoNgq8qXouyTOBIPjQ%3D" class="info-icon"></image>
+          <text>{{item.location.address}}</text>
+        </view>
+        <view class="info-item">
+          <image src="https://p26-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/bb1b62fcd078444fb19b2ab5ac3a667e~tplv-a9rns2rl98-image.image?lk3s=8e244e95&rcl=2026040114542862841A149A1450CE3E0A&rrcfp=f06b921b&x-expires=1777618534&x-signature=GtLnhS9z5D5bUj6j9hH04pHJuiQ%3D" class="info-icon"></image>
+          <text>{{formatDate(item.createdAt)}}</text>
+        </view>
+      </view>
+      <view class="demand-footer">
+        <view class="status-badge {{getStatusClass(item.status)}}">{{getStatusText(item.status)}}</view>
+      </view>
+    </view>
+  </view>
+</view>

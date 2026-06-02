@@ -1,0 +1,56 @@
+<!-- chat.wxml -->
+<view class="container">
+  <!-- 聊天消息区域 -->
+  <scroll-view class="chat-messages" scroll-y="true" scroll-into-view="{{scrollToMessage}}" bindscroll="onScroll">
+    <block wx:for="{{messages}}" wx:key="id">
+      <!-- 对方消息 -->
+      <view class="message-wrapper" wx:if="{{!item.isMine}}">
+        <view class="message-time" wx:if="{{item.showTime}}">{{item.time}}</view>
+        <view class="message-container other-message" id="message-{{item.id}}">
+          <view class="avatar-container">
+            <view class="avatar">
+              <image src="{{otherAvatar}}" mode="aspectFill"></image>
+            </view>
+          </view>
+          <view class="message-content">
+            <view class="message-bubble">
+              <image wx:if="{{item.type === 'image'}}" src="{{item.imageUrl}}" mode="widthFix" class="message-image" bindtap="previewImage" data-url="{{item.imageUrl}}"></image>
+              <view wx:else class="message-text">{{item.content}}</view>
+            </view>
+          </view>
+        </view>
+      </view>
+      
+      <!-- 我的消息 -->
+      <view class="message-wrapper" wx:if="{{item.isMine}}">
+        <view class="message-time" wx:if="{{item.showTime}}">{{item.time}}</view>
+        <view class="message-container my-message" id="message-{{item.id}}">
+          <view class="avatar-container">
+            <view class="avatar">
+              <image src="{{myAvatar}}" mode="aspectFill"></image>
+            </view>
+          </view>
+          <view class="message-content">
+            <view class="message-bubble">
+              <image wx:if="{{item.type === 'image'}}" src="{{item.imageUrl}}" mode="widthFix" class="message-image" bindtap="previewImage" data-url="{{item.imageUrl}}"></image>
+              <view wx:else class="message-text">{{item.content}}</view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </block>
+    <view id="msg-bottom"></view>
+  </scroll-view>
+  
+  <!-- 底部输入区域 -->
+  <view class="input-area">
+    <view class="input-container">
+      <image src="https://p11-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/4a94037254af491c972815cb7dc1fc13~tplv-a9rns2rl98-image.image?lk3s=8e244e95&rcl=2026040114542862841A149A1450CE3E0A&rrcfp=f06b921b&x-expires=1777618534&x-signature=Jwht%2B%2BVVLQouf5wHFFcCSvXe81o%3D" class="emoji-icon" bindtap="showEmoji"></image>
+      <input type="text" class="message-input" placeholder="输入消息..." value="{{inputValue}}" bindinput="onInput" bindconfirm="sendMessage" />
+      <image src="https://p11-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/02a6b5b4955046b78f0d00f5c55d276f~tplv-a9rns2rl98-image.image?lk3s=8e244e95&rcl=2026040114542862841A149A1450CE3E0A&rrcfp=f06b921b&x-expires=1777618535&x-signature=yZ45LMO4v2A7pkg1s3qLrngJ%2BJ4%3D" class="attach-icon" bindtap="sendImageMessage"></image>
+    </view>
+    <button class="send-btn" bindtap="sendMessage" disabled="{{!inputValue}}">
+      <image src="https://p6-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/44f49a175074476ba32c969076dcf1ae~tplv-a9rns2rl98-image.image?lk3s=8e244e95&rcl=2026040114542862841A149A1450CE3E0A&rrcfp=f06b921b&x-expires=1777618534&x-signature=Q%2FjXEilH7jVOkdYwRiJ4nbMxT2c%3D" class="send-icon"></image>
+    </button>
+  </view>
+</view>
