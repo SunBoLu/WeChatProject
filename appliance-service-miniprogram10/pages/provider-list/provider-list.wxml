@@ -1,0 +1,76 @@
+<view class="container">
+  <view class="search-bar">
+    <view class="search-input-container">
+      <image src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/9c9d7f0871f14abfb1d7909aef5c508e~tplv-a9rns2rl98-image.image?lk3s=8e244e95&rcl=20260401092055155D53C067306AAA622F&rrcfp=f06b921b&x-expires=1777598521&x-signature=ygg2xddX4hBjbaOtB114ixMQW50%3D" class="search-icon"></image>
+      <input type="text" class="search-input" placeholder="搜索服务方名称或地址" value="{{searchKeyword}}" bindinput="onSearchInput" />
+    </view>
+  </view>
+
+  <view wx:if="{{isLoading}}" class="loading-container">
+    <text class="loading-text">加载中...</text>
+  </view>
+
+  <scroll-view wx:elif="{{filteredProviders.length > 0}}" class="provider-list" scroll-y="true">
+    <view
+      class="provider-card"
+      wx:for="{{filteredProviders}}"
+      wx:key="user_id"
+      data-id="{{item.user_id}}"
+      bindtap="showProviderDetail"
+    >
+      <view class="provider-avatar">
+        <image wx:if="{{item.avatar}}" class="avatar-img" src="{{item.avatar}}" mode="aspectFill" />
+        <view wx:else class="avatar-placeholder">
+          <text class="avatar-text">{{item.name ? item.name.substring(0, 1) : '服'}}</text>
+        </view>
+      </view>
+      <view class="provider-info">
+        <view class="provider-name-row">
+          <text class="provider-name">{{item.name || '未命名服务方'}}</text>
+        </view>
+        <view class="provider-address">
+          <image src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/56dd21c7326d4534bbf91c20bbcc09ee~tplv-a9rns2rl98-image.image?lk3s=8e244e95&rcl=20260401142502D2F264310E62D1892049&rrcfp=f06b921b&x-expires=1777616736&x-signature=RxZSJV2Kp4mruABMifeL1kKa%2By4%3D" class="address-icon"></image>
+          <text class="address-text">{{item.address || '暂无地址'}}</text>
+        </view>
+      </view>
+      <view class="provider-distance">
+        <text class="distance-value">{{formatDistance(item.distance)}}</text>
+      </view>
+    </view>
+  </scroll-view>
+
+  <view wx:else class="empty-state">
+    <image src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/7f0a90291aa04befa256ff9ca44388f3~tplv-a9rns2rl98-image.image?lk3s=8e244e95&rcl=20260401092055155D53C067306AAA622F&rrcfp=f06b921b&x-expires=1777598527&x-signature=rwgjH27F4eQZBOGfXxwmOd4RpOU%3D" class="empty-icon"></image>
+    <text class="empty-text">附近暂无服务方</text>
+    <text class="empty-hint">换个区域试试</text>
+  </view>
+</view>
+
+<view class="modal-overlay" wx:if="{{showModal}}" bindtap="closeModal">
+  <view class="modal-container" catchtap="">
+    <view class="modal-header">
+      <view class="modal-avatar">
+        <image wx:if="{{selectedProvider.avatar}}" class="modal-avatar-img" src="{{selectedProvider.avatar}}" mode="aspectFill" />
+        <view wx:else class="modal-avatar-placeholder">
+          <text class="modal-avatar-text">{{selectedProvider.name ? selectedProvider.name.substring(0, 1) : '服'}}</text>
+        </view>
+      </view>
+      <text class="modal-name">{{selectedProvider.name || '未命名服务方'}}</text>
+    </view>
+
+    <view class="modal-body">
+      <view class="modal-info-item">
+        <text class="modal-info-label">地址</text>
+        <text class="modal-info-value">{{selectedProvider.address || '暂无地址'}}</text>
+      </view>
+      <view class="modal-info-item">
+        <text class="modal-info-label">距离</text>
+        <text class="modal-info-value">{{formatDistance(selectedProvider.distance)}}</text>
+      </view>
+    </view>
+
+    <view class="modal-footer">
+      <button class="modal-close-btn" bindtap="closeModal">关闭</button>
+    </view>
+  </view>
+</view>

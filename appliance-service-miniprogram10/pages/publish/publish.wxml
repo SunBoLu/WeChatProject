@@ -1,0 +1,149 @@
+<!-- publish.wxml -->
+<view class="container">
+  <form class="publish-form" bindsubmit="publishDemand">
+    <view class="form-section">
+      <view class="section-title">服务类型</view>
+      <view class="service-type-grid">
+        <radio-group bindchange="onServiceTypeChange">
+          <label class="service-type-item {{serviceType === 'installation' ? 'active' : ''}}">
+            <radio value="installation" checked="{{serviceType === 'installation'}}" />
+            <view class="service-type-icon installation-icon">
+              <image src="https://cdn.jsdelivr.net/gh/SunBoLu/WeChatProjectLogo@WeChatProjectLogo/Logo/installation-icon.png" class="service-type-image" />
+            </view>
+            <view class="service-type-text">安装</view>
+          </label>
+          <label class="service-type-item {{serviceType === 'repair' ? 'active' : ''}}">
+            <radio value="repair" checked="{{serviceType === 'repair'}}" />
+            <view class="service-type-icon repair-icon">
+              <image src="https://cdn.jsdelivr.net/gh/SunBoLu/WeChatProjectLogo@WeChatProjectLogo/Logo/repair-icon.png" class="service-type-image" />
+            </view>
+            <view class="service-type-text">维修</view>
+          </label>
+          <label class="service-type-item {{serviceType === 'cleaning' ? 'active' : ''}}">
+            <radio value="cleaning" checked="{{serviceType === 'cleaning'}}" />
+            <view class="service-type-icon cleaning-icon">
+              <image src="https://cdn.jsdelivr.net/gh/SunBoLu/WeChatProjectLogo@WeChatProjectLogo/Logo/cleaning-icon.png" class="service-type-image" />
+            </view>
+            <view class="service-type-text">清洗</view>
+          </label>
+        </radio-group>
+      </view>
+    </view>
+
+    <view class="form-section">
+      <view class="section-title">家电类型</view>
+      <view class="appliance-type-grid">
+        <radio-group bindchange="onApplianceTypeChange">
+          <label class="appliance-type-item {{applianceType === 'air-conditioner' ? 'active' : ''}}">
+            <radio value="air-conditioner" checked="{{applianceType === 'air-conditioner'}}" />
+            <view class="appliance-type-icon air-conditioner-icon">
+              <image src="https://cdn.jsdelivr.net/gh/SunBoLu/WeChatProjectLogo@WeChatProjectLogo/Logo/air-conditioner-icon.png" class="appliance-type-image" />
+            </view>
+            <view class="appliance-type-text">空调</view>
+          </label>
+          <label class="appliance-type-item {{applianceType === 'refrigerator' ? 'active' : ''}}">
+            <radio value="refrigerator" checked="{{applianceType === 'refrigerator'}}" />
+            <view class="appliance-type-icon refrigerator-icon">
+              <image src="https://cdn.jsdelivr.net/gh/SunBoLu/WeChatProjectLogo@WeChatProjectLogo/Logo/refrigerator-icon.png" class="appliance-type-image" />
+            </view>
+            <view class="appliance-type-text">冰箱</view>
+          </label>
+          <label class="appliance-type-item {{applianceType === 'washing-machine' ? 'active' : ''}}">
+            <radio value="washing-machine" checked="{{applianceType === 'washing-machine'}}" />
+            <view class="appliance-type-icon washing-machine-icon">
+              <image src="https://cdn.jsdelivr.net/gh/SunBoLu/WeChatProjectLogo@WeChatProjectLogo/Logo/washing-machine-icon.png" class="appliance-type-image" />
+            </view>
+            <view class="appliance-type-text">洗衣机</view>
+          </label>
+          <label class="appliance-type-item {{applianceType === 'tv' ? 'active' : ''}}">
+            <radio value="tv" checked="{{applianceType === 'tv'}}" />
+            <view class="appliance-type-icon tv-icon">
+              <image src="https://cdn.jsdelivr.net/gh/SunBoLu/WeChatProjectLogo@WeChatProjectLogo/Logo/tv-icon.png" class="appliance-type-image" />
+            </view>
+            <view class="appliance-type-text">电视</view>
+          </label>
+          <label class="appliance-type-item {{applianceType === 'water-heater' ? 'active' : ''}}">
+            <radio value="water-heater" checked="{{applianceType === 'water-heater'}}" />
+            <view class="appliance-type-icon water-heater-icon">
+              <image src="https://cdn.jsdelivr.net/gh/SunBoLu/WeChatProjectLogo@WeChatProjectLogo/Logo/water-heater-icon.png" class="appliance-type-image" />
+            </view>
+            <view class="appliance-type-text">热水器</view>
+          </label>
+          <label class="appliance-type-item {{applianceType === 'range-hood' ? 'active' : ''}}">
+            <radio value="range-hood" checked="{{applianceType === 'range-hood'}}" />
+            <view class="appliance-type-icon range-hood-icon">
+              <image src="https://cdn.jsdelivr.net/gh/SunBoLu/WeChatProjectLogo@WeChatProjectLogo/Logo/range-hood-icon.png" class="appliance-type-image" />
+            </view>
+            <view class="appliance-type-text">油烟机</view>
+          </label>
+          <label class="appliance-type-item {{applianceType === 'other' ? 'active' : ''}}">
+            <radio value="other" checked="{{applianceType === 'other'}}" />
+            <view class="appliance-type-icon other-icon">
+              <image src="https://cdn.jsdelivr.net/gh/SunBoLu/WeChatProjectLogo@WeChatProjectLogo/Logo/other-icon.png" class="appliance-type-image" />
+            </view>
+            <view class="appliance-type-text">其他</view>
+          </label>
+        </radio-group>
+      </view>
+    </view>
+
+    <view class="form-section">
+      <view class="section-title">需求标题</view>
+      <input type="text" class="input-field" placeholder="请输入需求标题（如：空调安装需求）" name="title" value="{{title}}" bindinput="onTitleInput" />
+    </view>
+
+    <view class="form-section">
+      <view class="section-title">需求描述</view>
+      <textarea class="textarea-field" placeholder="请详细描述您的需求，包括家电型号、故障情况等信息" name="description" value="{{description}}" bindinput="onDescriptionInput"></textarea>
+    </view>
+
+    <view class="form-section">
+      <view class="section-title">联系人</view>
+      <input type="text" class="input-field" placeholder="请输入联系人姓名" name="contactName" value="{{contactName}}" bindinput="onContactNameInput" />
+    </view>
+
+    <view class="form-section">
+      <view class="section-title">联系电话</view>
+      <input type="number" class="input-field" placeholder="请输入联系电话" name="contactPhone" value="{{contactPhone}}" bindinput="onContactPhoneInput" />
+    </view>
+
+    <view class="form-section">
+      <view class="section-title">服务地址</view>
+      <view class="address-input-container">
+        <image src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/53595b6c57584a728fc407a8e700545c~tplv-a9rns2rl98-image.image?lk3s=8e244e95&rcl=2026040114542862841A149A1450CE3E0A&rrcfp=f06b921b&x-expires=1777618534&x-signature=ZScEoZRgROoNgq8qXouyTOBIPjQ%3D" class="address-icon"></image>
+        <input type="text" class="input-field address-input" placeholder="请输入详细服务地址" name="address" value="{{selectedAddress}}" bindinput="onAddressInput" data-name="selectedAddress" />
+        <view class="location-btn" bindtap="chooseLocation">
+          <image src="https://cdn.jsdelivr.net/gh/SunBoLu/WeChatProjectLogo@WeChatProjectLogo/Images/map-icon.png" class="map-icon"></image>
+        </view>
+      </view>
+    </view>
+
+    <view class="submit-container">
+      <button class="btn btn-primary" form-type="submit">发布需求</button>
+    </view>
+  </form>
+</view>
+
+<view class="payment-modal-overlay" wx:if="{{showPaymentModal}}" bindtap="closePaymentModal">
+  <view class="payment-modal-container" catchtap="">
+    <view class="payment-modal-header">
+      <text class="payment-modal-title">预支付确认</text>
+      <view class="payment-modal-close" bindtap="closePaymentModal">✕</view>
+    </view>
+    <view class="payment-modal-body">
+      <text class="payment-amount">¥50.00</text>
+      <text class="payment-instruction">请扫描以下二维码完成预支付（50元）</text>
+      <view class="payment-qr-wrapper">
+        <image wx:if="{{paymentQrCode}}" class="payment-qr-image" src="data:image/png;base64,{{paymentQrCode}}" mode="aspectFit" />
+        <view wx:else class="payment-qr-placeholder">
+          <text class="payment-qr-loading">加载二维码中...</text>
+        </view>
+      </view>
+      <text class="payment-hint">扫描二维码完成支付后，请点击下方按钮确认</text>
+    </view>
+    <view class="payment-modal-footer">
+      <button class="btn-confirm-payment" bindtap="confirmPayment" loading="{{paying}}" disabled="{{paying}}">已完成支付</button>
+      <button class="btn-cancel-payment" bindtap="closePaymentModal">取消</button>
+    </view>
+  </view>
+</view>

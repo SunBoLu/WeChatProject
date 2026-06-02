@@ -1,0 +1,187 @@
+<view class="container">
+  <!-- 用户信息 -->
+  <view class="user-info-card">
+    <view class="user-avatar">
+      <image src="{{userInfo.avatar || 'https://cdn.jsdelivr.net/gh/SunBoLu/WeChatProjectLogo@WeChatProjectLogo/Images/profile-user-avatar.png'}}" mode="aspectFill"></image>
+    </view>
+    <view class="user-details">
+      <view class="user-name">{{userInfo.name || '未登录'}}</view>
+      <view class="user-role">{{userRoleText}}</view>
+    </view>
+    <navigator url="/pages/message/message" class="message-icon" wx:if="{{isLoggedIn}}">
+      <image src="https://s1.aigei.com/src/img/png/b4/b47f1a8cdc3c408f954f0e955e040291.png?imageMogr2/auto-orient/thumbnail/!132x132r/gravity/Center/crop/132x132/quality/85/%7CimageView2/2/w/132&e=2051020800&token=P7S2Xpzfz11vAkASLTkfHN7Fw-oOZBecqeJaxypL:ZXxYhSQA8UzLbqP2beoX3O3_KdQ=" class="message-img"></image>
+      <view class="message-badge" wx:if="{{unreadCount > 0}}">{{unreadCount}}</view>
+    </navigator>
+  </view>
+
+  <!-- 用户统计 -->
+  <view class="user-stats">
+    <view class="stat-item">
+      <view class="stat-value">{{userStats.demandCount}}</view>
+      <view class="stat-label">我的发布</view>
+    </view>
+    <view class="stat-item">
+      <view class="stat-value">{{userStats.orderCount}}</view>
+      <view class="stat-label">我的订单</view>
+    </view>
+    <view class="stat-item" wx:if="{{userInfo.role === 'serviceProvider'}}">
+      <view class="stat-value">{{userStats.rating || '--'}}</view>
+      <view class="stat-label">服务评分</view>
+    </view>
+  </view>
+
+  <!-- 我的信息 -->
+  <view class="section-card" wx:if="{{isLoggedIn}}">
+    <view class="section-title">我的信息</view>
+    <view class="info-list" bindtap="showEditModal">
+      <view class="info-list-item">
+        <view class="info-list-label">地址</view>
+        <view class="info-list-value">{{userInfo.address || '未填写'}}</view>
+        <view class="info-list-arrow">
+          <image src="https://cdn.jsdelivr.net/gh/SunBoLu/WeChatProjectLogo@WeChatProjectLogo/Images/profile-menu-list-arrow.png" mode="aspectFit"></image>
+        </view>
+      </view>
+      <view class="info-list-item" wx:if="{{userInfo.role === 'serviceProvider'}}">
+        <view class="info-list-label">电话</view>
+        <view class="info-list-value">{{userInfo.phone || '未填写'}}</view>
+        <view class="info-list-arrow">
+          <image src="https://cdn.jsdelivr.net/gh/SunBoLu/WeChatProjectLogo@WeChatProjectLogo/Images/profile-menu-list-arrow.png" mode="aspectFit"></image>
+        </view>
+      </view>
+      <view class="info-list-item" wx:if="{{userInfo.role === 'serviceProvider'}}">
+        <view class="info-list-label">收款码</view>
+        <view class="info-list-value">{{userInfo.payment_qr_code || userInfo.qr_code_uploaded ? '收款码已上传' : '收款码未上传'}}</view>
+        <view class="info-list-arrow">
+          <image src="https://cdn.jsdelivr.net/gh/SunBoLu/WeChatProjectLogo@WeChatProjectLogo/Images/profile-menu-list-arrow.png" mode="aspectFit"></image>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 功能菜单 -->
+  <view class="menu-card">
+    <view class="menu-grid">
+      <view class="menu-item" bindtap="navigateToDemands" wx:if="{{userInfo.role === 'demander'}}">
+        <view class="menu-icon demand-icon">
+          <image src="https://cdn.jsdelivr.net/gh/SunBoLu/WeChatProjectLogo@WeChatProjectLogo/Images/profile-demand-icon.png" mode="aspectFit"></image>
+        </view>
+        <view class="menu-text">我的发布</view>
+      </view>
+      <view class="menu-item" bindtap="navigateToPendingOrders">
+        <view class="menu-icon pending-icon">
+          <image src="https://cdn.jsdelivr.net/gh/SunBoLu/WeChatProjectLogo@WeChatProjectLogo/Images/profile-pending-icon.png" mode="aspectFit"></image>
+        </view>
+        <view class="menu-text">{{userInfo.role === 'demander' ? '待接单' : '已接单'}}</view>
+      </view>
+      <view class="menu-item" bindtap="navigateToOngoingOrders">
+        <view class="menu-icon ongoing-icon">
+          <image src="https://cdn.jsdelivr.net/gh/SunBoLu/WeChatProjectLogo@WeChatProjectLogo/Images/profile-ongoing-icon.png" mode="aspectFit"></image>
+        </view>
+        <view class="menu-text">进行中</view>
+      </view>
+      <view class="menu-item" bindtap="navigateToCompletedOrders">
+        <view class="menu-icon completed-icon">
+          <image src="https://cdn.jsdelivr.net/gh/SunBoLu/WeChatProjectLogo@WeChatProjectLogo/Images/profile-completed-icon.png" mode="aspectFit"></image>
+        </view>
+        <view class="menu-text">已完成</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 服务记录 -->
+  <view class="section-card">
+    <view class="section-title">服务记录</view>
+    <view class="records-container" wx:if="{{serviceRecords.length > 0}}">
+      <view class="record-item" wx:for="{{serviceRecords}}" wx:key="id">
+        <view class="record-title">{{item.title}}</view>
+        <view class="record-info">
+          <view class="record-type {{getTagClass(item.type)}}">{{getTagText(item.type)}}</view>
+          <view class="record-time">{{formatDate(item.createdAt)}}</view>
+        </view>
+      </view>
+    </view>
+    <view class="empty-records" wx:else>
+      <image src="https://cdn.jsdelivr.net/gh/SunBoLu/WeChatProjectLogo@WeChatProjectLogo/Images/profile-empty-records.png" class="empty-icon"></image>
+      <text class="empty-text">暂无服务记录</text>
+    </view>
+  </view>
+
+  <!-- 其他功能 -->
+  <view class="section-card">
+    <view class="menu-list">
+      <view class="menu-list-item" bindtap="showServiceGuarantee" wx:if="{{userInfo.role === 'demander'}}">
+        <view class="menu-list-icon">
+          <image src="https://cdn.jsdelivr.net/gh/SunBoLu/WeChatProjectLogo@WeChatProjectLogo/Images/profile-guarantee-icon.png" mode="aspectFit"></image>
+        </view>
+        <view class="menu-list-text">服务保障</view>
+        <view class="menu-list-arrow">
+          <image src="https://cdn.jsdelivr.net/gh/SunBoLu/WeChatProjectLogo@WeChatProjectLogo/Images/profile-menu-list-arrow.png" mode="aspectFit"></image>
+        </view>
+      </view>
+      <view class="menu-list-item" bindtap="showHelpCenter" wx:if="{{userInfo.role === 'serviceProvider'}}">
+        <view class="menu-list-icon">
+          <image src="https://cdn.jsdelivr.net/gh/SunBoLu/WeChatProjectLogo@WeChatProjectLogo/Images/profile-help-icon.png" mode="aspectFit"></image>
+        </view>
+        <view class="menu-list-text">帮助中心</view>
+        <view class="menu-list-arrow">
+          <image src="https://cdn.jsdelivr.net/gh/SunBoLu/WeChatProjectLogo@WeChatProjectLogo/Images/profile-menu-list-arrow.png" mode="aspectFit"></image>
+        </view>
+      </view>
+      <view class="menu-list-item" bindtap="navigateToNearbyProviders">
+        <view class="menu-list-icon">
+          <image src="https://cdn.jsdelivr.net/gh/SunBoLu/WeChatProjectLogo@WeChatProjectLogo/Images/profile-guarantee-icon.png" mode="aspectFit"></image>
+        </view>
+        <view class="menu-list-text">附近服务方</view>
+        <view class="menu-list-arrow">
+          <image src="https://cdn.jsdelivr.net/gh/SunBoLu/WeChatProjectLogo@WeChatProjectLogo/Images/profile-menu-list-arrow.png" mode="aspectFit"></image>
+        </view>
+      </view>
+      <view class="menu-list-item" bindtap="callCustomerService">
+        <view class="menu-list-icon">
+          <image src="https://cdn.jsdelivr.net/gh/SunBoLu/WeChatProjectLogo@WeChatProjectLogo/Images/profile-phone-icon.png" mode="aspectFit"></image>
+        </view>
+        <view class="menu-list-text">客服热线</view>
+        <view class="menu-list-value">400-123-4567</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 登录/注册按钮 -->
+  <view class="action-button" wx:if="{{!isLoggedIn}}">
+    <button class="btn btn-primary w-full" bindtap="navigateToAuth">登录/注册</button>
+  </view>
+
+  <!-- 退出登录按钮 -->
+  <view class="action-button" wx:else>
+    <button class="btn btn-outline w-full" bindtap="logout">退出登录</button>
+  </view>
+
+  <!-- 编辑信息弹窗 -->
+  <view class="modal-mask" wx:if="{{showEditModal}}" bindtap="hideEditModal"></view>
+  <view class="modal-container" wx:if="{{showEditModal}}">
+    <view class="modal-header">
+      <view class="modal-title">编辑个人信息</view>
+      <view class="modal-close" bindtap="hideEditModal">✕</view>
+    </view>
+    <view class="modal-body">
+      <view class="form-item">
+        <view class="form-label">地址</view>
+        <input class="form-input" value="{{editAddress}}" placeholder="请输入地址" bindinput="onEditAddressInput" />
+      </view>
+      <view class="form-item" wx:if="{{userInfo.role === 'serviceProvider'}}">
+        <view class="form-label">电话</view>
+        <input class="form-input" value="{{editPhone}}" placeholder="请输入电话" bindinput="onEditPhoneInput" type="number" maxlength="11" />
+      </view>
+      <view class="form-item" wx:if="{{userInfo.role === 'serviceProvider'}}">
+        <view class="form-label">收款码</view>
+        <view class="qrcode-upload" bindtap="onUploadQrCode">
+          <text class="qrcode-status">{{editQrCodeUploaded ? '收款码已选择' : '点击上传收款码'}}</text>
+          <view class="qrcode-arrow">›</view>
+        </view>
+      </view>
+    </view>
+    <view class="modal-footer">
+      <button class="btn btn-primary w-full" bindtap="saveEditInfo">保存</button>
+    </view>
+  </view>
+</view>

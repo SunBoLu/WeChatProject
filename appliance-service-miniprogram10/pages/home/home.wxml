@@ -1,0 +1,63 @@
+<!-- home.wxml -->
+<view class="container">
+  <view class="search-bar">
+    <view class="search-input-container">
+      <image src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/9c9d7f0871f14abfb1d7909aef5c508e~tplv-a9rns2rl98-image.image?lk3s=8e244e95&rcl=20260401092055155D53C067306AAA622F&rrcfp=f06b921b&x-expires=1777598521&x-signature=ygg2xddX4hBjbaOtB114ixMQW50%3D" class="search-icon"></image>
+      <input type="text" class="search-input" placeholder="搜索家电服务" value="{{searchKeyword}}" bindinput="onSearchInput" />
+    </view>
+    <view class="filter-btn" bindtap="showFilter">
+      <image src="https://p26-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/043c3a0ffcfd4d6cb53947f6c89fda8a~tplv-a9rns2rl98-image.image?lk3s=8e244e95&rcl=20260401092055155D53C067306AAA622F&rrcfp=f06b921b&x-expires=1777598524&x-signature=QwqK61k8J%2FUeyzHh7ekTLIzaXFU%3D" class="filter-icon"></image>
+    </view>
+  </view>
+
+  <view class="provider-banner" wx:if="{{userRole === 'demander'}}" bindtap="navigateToProviderList">
+    <view class="provider-banner-content">
+      <image src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/56dd21c7326d4534bbf91c20bbcc09ee~tplv-a9rns2rl98-image.image?lk3s=8e244e95&rcl=20260401142502D2F264310E62D1892049&rrcfp=f06b921b&x-expires=1777616736&x-signature=RxZSJV2Kp4mruABMifeL1kKa%2By4%3D" class="provider-banner-icon"></image>
+      <text class="provider-banner-text">查看附近服务方</text>
+    </view>
+    <view class="provider-banner-arrow">›</view>
+  </view>
+
+  <scroll-view class="category-scroll" scroll-x="true" show-scrollbar="false">
+    <view class="category-item {{activeCategory === 'all' ? 'active' : ''}}" data-category="all" bindtap="switchCategory">全部</view>
+    <view class="category-item {{activeCategory === 'air-conditioner' ? 'active' : ''}}" data-category="air-conditioner" bindtap="switchCategory">空调</view>
+    <view class="category-item {{activeCategory === 'refrigerator' ? 'active' : ''}}" data-category="refrigerator" bindtap="switchCategory">冰箱</view>
+    <view class="category-item {{activeCategory === 'washing-machine' ? 'active' : ''}}" data-category="washing-machine" bindtap="switchCategory">洗衣机</view>
+    <view class="category-item {{activeCategory === 'tv' ? 'active' : ''}}" data-category="tv" bindtap="switchCategory">电视</view>
+    <view class="category-item {{activeCategory === 'water-heater' ? 'active' : ''}}" data-category="water-heater" bindtap="switchCategory">热水器</view>
+    <view class="category-item {{activeCategory === 'range-hood' ? 'active' : ''}}" data-category="range-hood" bindtap="switchCategory">油烟机</view>
+    <view class="category-item {{activeCategory === 'other' ? 'active' : ''}}" data-category="other" bindtap="switchCategory">更多</view>
+  </scroll-view>
+
+  <scroll-view class="demand-list" scroll-y="true" bindscrolltolower="loadMoreDemands" refresher-enabled="true" refresher-triggered="{{refreshing}}" bindrefresherrefresh="refreshDemands">
+    <block wx:if="{{filteredDemands.length > 0}}">
+      <view class="demand-card" wx:for="{{filteredDemands}}" wx:key="id" data-id="{{item.id}}" bindtap="showDemandDetail">
+        <view class="demand-header">
+          <view class="demand-title">{{item.title}}</view>
+          <view class="demand-tag {{getTagClass(item.serviceType)}}">{{getTagText(item.serviceType)}}</view>
+        </view>
+        <view class="demand-description">{{item.description}}</view>
+        <view class="demand-meta">
+          <view class="demand-appliance-type" wx:if="{{item.applianceType}}">
+            <text class="appliance-tag">{{getApplianceTypeText(item.applianceType)}}</text>
+          </view>
+        </view>
+        <view class="demand-footer">
+          <view class="demand-location">
+            <image src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/56dd21c7326d4534bbf91c20bbcc09ee~tplv-a9rns2rl98-image.image?lk3s=8e244e95&rcl=20260401142502D2F264310E62D1892049&rrcfp=f06b921b&x-expires=1777616736&x-signature=RxZSJV2Kp4mruABMifeL1kKa%2By4%3D" class="location-icon"></image>
+            <text>{{item.address}}</text>
+            <text class="demand-distance" wx:if="{{item.distance != null}}">{{item.distance.toFixed(1)}}km</text>
+          </view>
+          <view class="demand-time">{{formatDate(item.createdAt || item.created_at)}}</view>
+        </view>
+      </view>
+    </block>
+    <view class="empty-state" wx:else>
+      <image src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/7f0a90291aa04befa256ff9ca44388f3~tplv-a9rns2rl98-image.image?lk3s=8e244e95&rcl=20260401092055155D53C067306AAA622F&rrcfp=f06b921b&x-expires=1777598527&x-signature=rwgjH27F4eQZBOGfXxwmOd4RpOU%3D" class="empty-icon"></image>
+      <text class="empty-text">暂无需求</text>
+    </view>
+    <view class="loading-more" wx:if="{{loadingMore}}">
+      <text>加载中...</text>
+    </view>
+  </scroll-view>
+</view>

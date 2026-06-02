@@ -1,0 +1,44 @@
+<!-- rating.wxml -->
+<view class="container">
+  <view class="header">
+    <text class="title">服务评价</text>
+  </view>
+  
+  <view class="content">
+    <view class="service-info">
+      <text class="service-title">{{demand.title}}</text>
+      <text class="service-type">{{getTagText(demand.type)}}</text>
+    </view>
+    
+    <view class="rating-section">
+      <text class="rating-label">服务评分</text>
+      <view class="stars">
+        <block wx:for="{{stars}}" wx:key="*this">
+          <view 
+            class="star {{rating >= item ? 'active' : ''}}" 
+            data-rating="{{item}}" 
+            bindtap="selectRating"
+          >
+            ★
+          </view>
+        </block>
+      </view>
+    </view>
+    
+    <view class="comment-section">
+      <text class="comment-label">评价内容</text>
+      <textarea 
+        class="comment-input" 
+        placeholder="请输入您的真实服务体验，您的评价将有助于改进我们的服务，谢谢！" 
+        value="{{comment}}" 
+        bindinput="onCommentInput"
+        maxlength="200"
+      ></textarea>
+      <text class="comment-count">{{comment.length}}/200</text>
+    </view>
+  </view>
+  
+  <view class="footer">
+    <button class="submit-btn" bindtap="submitRating">提交评价</button>
+  </view>
+</view>

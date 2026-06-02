@@ -1,0 +1,476 @@
+/* publish.wxss */
+
+.container {
+  min-height: 100vh;
+  background-color: #F5F5F5;
+  padding: 24rpx;
+}
+
+/* 表单 */
+.publish-form {
+  background-color: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 32rpx;
+}
+
+/* 表单区块 */
+.form-section {
+  margin-bottom: 48rpx;
+}
+
+.section-title {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #666666;
+  margin-bottom: 24rpx;
+}
+
+/* 服务类型选择 */
+.service-type-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24rpx;
+}
+
+.service-type-grid radio-group {
+  display: contents;
+}
+
+.service-type-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32rpx 0;
+  border: 1rpx solid #EEEEEE;
+  border-radius: 8rpx;
+  transition: all 0.3s;
+}
+
+.service-type-item.active {
+  border-color: #1E88E5;
+  background-color: rgba(30, 136, 229, 0.05);
+}
+
+.service-type-item radio {
+  display: none;
+}
+
+.service-type-icon {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 9999rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16rpx;
+}
+
+.service-type-image {
+  width: 32rpx;
+  height: 32rpx;
+  display: block;
+}
+
+.service-type-item.active .service-type-icon {
+  background-color: #1E88E5;
+}
+
+.installation-icon {
+  background-color: rgba(30, 136, 229, 0.1);
+}
+
+.repair-icon {
+  background-color: rgba(30, 136, 229, 0.1);
+}
+
+.cleaning-icon {
+  background-color: rgba(30, 136, 229, 0.1);
+}
+
+.service-type-text {
+  font-size: 28rpx;
+  color: #333333;
+}
+
+/* 家电类型选择 */
+.appliance-type-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24rpx;
+}
+
+.appliance-type-grid radio-group {
+  display: contents;
+}
+
+.appliance-type-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24rpx 0;
+  border: 1rpx solid #EEEEEE;
+  border-radius: 8rpx;
+  transition: all 0.3s;
+}
+
+.appliance-type-item.active {
+  border-color: #1E88E5;
+  background-color: rgba(30, 136, 229, 0.05);
+}
+
+.appliance-type-item radio {
+  display: none;
+}
+
+.appliance-type-icon {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 9999rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16rpx;
+}
+
+.appliance-type-image {
+  width: 32rpx;
+  height: 32rpx;
+  display: block;
+}
+
+.appliance-type-item.active .appliance-type-icon {
+  background-color: #1E88E5;
+}
+
+.air-conditioner-icon {
+  background-color: rgba(30, 136, 229, 0.1);
+}
+
+.refrigerator-icon {
+  background-color: rgba(30, 136, 229, 0.1);
+}
+
+.washing-machine-icon {
+  background-color: rgba(30, 136, 229, 0.1);
+}
+
+.tv-icon {
+  background-color: rgba(30, 136, 229, 0.1);
+}
+
+.water-heater-icon {
+  background-color: rgba(30, 136, 229, 0.1);
+}
+
+.range-hood-icon {
+  background-color: rgba(30, 136, 229, 0.1);
+}
+
+.other-icon {
+  background-color: rgba(30, 136, 229, 0.1);
+}
+
+.appliance-type-text {
+  font-size: 24rpx;
+  color: #333333;
+}
+
+/* 输入框 */
+.input-field {
+  width: 100%;
+  padding: 32rpx 32rpx;
+  border: 1rpx solid #EEEEEE;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  color: #333333;
+  background-color: #FFFFFF;
+  min-height: 96rpx;
+}
+
+.input-field:focus {
+  border-color: #1E88E5;
+  outline: none;
+}
+
+.textarea-field {
+  width: 100%;
+  padding: 32rpx 32rpx;
+  border: 1rpx solid #EEEEEE;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  color: #333333;
+  background-color: #FFFFFF;
+  min-height: 288rpx;
+  resize: none;
+  line-height: 1.5;
+}
+
+.textarea-field:focus {
+  border-color: #1E88E5;
+  outline: none;
+}
+
+/* 地址输入 */
+.address-input-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.address-icon {
+  width: 32rpx;
+  height: 32rpx;
+  position: absolute;
+  left: 32rpx;
+  z-index: 1;
+}
+
+.address-input {
+  padding-left: 72rpx;
+  flex: 1;
+  min-height: 96rpx;
+}
+
+.location-btn {
+  position: absolute;
+  right: 16rpx;
+  width: 64rpx;
+  height: 64rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  padding: 0;
+  z-index: 10;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.map-icon {
+  width: 32rpx;
+  height: 32rpx;
+}
+
+/* 按钮样式 */
+.btn {
+  display: flex;
+  width: 100%;
+  height: 100rpx;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20rpx;
+  font-size: 34rpx;
+  font-weight: 600;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+  border: none;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  line-height: 1;
+}
+
+.btn::after {
+  border: none;
+  background: transparent;
+}
+
+.btn-primary {
+  background-color: #1E88E5;
+  color: #FFFFFF;
+  box-shadow: 0 6rpx 16rpx rgba(30, 136, 229, 0.4);
+}
+
+.btn-primary:hover {
+  background-color: #1976D2;
+  box-shadow: 0 8rpx 20rpx rgba(30, 136, 229, 0.5);
+}
+
+.btn-primary:active {
+  background-color: #1565C0;
+  box-shadow: 0 3rpx 10rpx rgba(30, 136, 229, 0.4);
+  transform: translateY(2rpx);
+}
+
+.w-full {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* 提交按钮容器 */
+.submit-container {
+  width: 100%;
+  padding: 0;
+  box-sizing: border-box;
+  margin-top: 32rpx;
+  margin-bottom: 32rpx;
+  background: transparent;
+}
+
+.submit-container .btn {
+  margin: 0;
+  width: 100%;
+}
+
+.payment-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.payment-modal-container {
+  width: 85%;
+  background: #FFFFFF;
+  border-radius: 24rpx;
+  overflow: hidden;
+  animation: modalFadeIn 0.3s ease;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.payment-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 32rpx;
+  background: linear-gradient(135deg, #1E88E5, #42A5F5);
+}
+
+.payment-modal-title {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #FFFFFF;
+}
+
+.payment-modal-close {
+  width: 48rpx;
+  height: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  color: #FFFFFF;
+  opacity: 0.8;
+}
+
+.payment-modal-body {
+  padding: 40rpx 32rpx 32rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.payment-amount {
+  font-size: 56rpx;
+  font-weight: 700;
+  color: #E53935;
+  margin-bottom: 16rpx;
+}
+
+.payment-instruction {
+  font-size: 28rpx;
+  color: #333333;
+  text-align: center;
+  margin-bottom: 32rpx;
+  line-height: 1.6;
+}
+
+.payment-qr-wrapper {
+  width: 400rpx;
+  height: 400rpx;
+  border: 2rpx solid #EEEEEE;
+  border-radius: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 32rpx;
+  background-color: #FAFAFA;
+}
+
+.payment-qr-image {
+  width: 360rpx;
+  height: 360rpx;
+}
+
+.payment-qr-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.payment-qr-loading {
+  font-size: 24rpx;
+  color: #999999;
+}
+
+.payment-hint {
+  font-size: 24rpx;
+  color: #999999;
+  text-align: center;
+  line-height: 1.6;
+}
+
+.payment-modal-footer {
+  padding: 0 32rpx 32rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.btn-confirm-payment {
+  width: 100%;
+  height: 88rpx;
+  background: #1E88E5;
+  color: #FFFFFF;
+  border-radius: 16rpx;
+  font-size: 30rpx;
+  font-weight: 500;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-confirm-payment:active {
+  background: #1565C0;
+}
+
+.btn-confirm-payment[disabled] {
+  background: #90CAF9;
+}
+
+.btn-cancel-payment {
+  width: 100%;
+  height: 88rpx;
+  background: transparent;
+  color: #999999;
+  border-radius: 16rpx;
+  font-size: 28rpx;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-cancel-payment:active {
+  background: #F5F5F5;
+}

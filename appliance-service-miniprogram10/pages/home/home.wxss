@@ -1,0 +1,291 @@
+/* home.wxss */
+
+.container {
+  min-height: 100vh;
+  background-color: #F5F5F5;
+}
+
+/* 顶部搜索栏 */
+.search-bar {
+  display: flex;
+  align-items: center;
+  padding: 24rpx 32rpx;
+  background-color: #FFFFFF;
+  box-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.search-input-container {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-icon {
+  width: 32rpx;
+  height: 32rpx;
+  position: absolute;
+  left: 24rpx;
+  z-index: 1;
+}
+
+.search-input {
+  width: 100%;
+  padding: 24rpx 32rpx 24rpx 64rpx;
+  background-color: #F5F5F5;
+  border-radius: 9999rpx;
+  font-size: 28rpx;
+  color: #333333;
+  min-height: 80rpx;
+  box-sizing: border-box;
+}
+
+.filter-btn {
+  margin-left: 24rpx;
+  padding: 16rpx;
+}
+
+.filter-icon {
+  width: 32rpx;
+  height: 32rpx;
+}
+
+/* 服务分类导航 */
+.category-scroll {
+  background-color: #FFFFFF;
+  padding: 24rpx 0;
+  border-bottom: 1rpx solid #EEEEEE;
+  white-space: nowrap;
+  position: sticky;
+  top: 96rpx;
+  z-index: 9;
+}
+
+.category-item {
+  display: inline-block;
+  padding: 16rpx 32rpx;
+  font-size: 28rpx;
+  color: #666666;
+  position: relative;
+}
+
+.category-item.active {
+  color: #1E88E5;
+  font-weight: 500;
+}
+
+.category-item.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 32rpx;
+  right: 32rpx;
+  height: 4rpx;
+  background-color: #1E88E5;
+}
+
+/* 需求列表 */
+.demand-list {
+  padding: 24rpx;
+  height: calc(100vh - 160rpx);
+}
+
+.demand-card {
+  background-color: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 32rpx;
+  margin-bottom: 24rpx;
+  box-shadow: 0 4rpx 6rpx rgba(0, 0, 0, 0.05), 0 1rpx 3rpx rgba(0, 0, 0, 0.1);
+  transition: all 0.3s;
+  box-sizing: border-box;
+}
+
+.demand-card:active {
+  transform: scale(0.98);
+}
+
+.demand-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+  flex-wrap: wrap;
+}
+
+.demand-title {
+  font-size: 32rpx;
+  font-weight: 500;
+  color: #333333;
+  flex: 1;
+  min-width: 0;
+  margin-bottom: 8rpx;
+}
+
+.demand-tag {
+  padding: 8rpx 24rpx;
+  border-radius: 9999rpx;
+  font-size: 24rpx;
+  font-weight: 500;
+  margin-left: 16rpx;
+  flex-shrink: 0;
+}
+
+.demand-tag.tag-primary {
+  background-color: rgba(30, 136, 229, 0.1);
+  color: #1E88E5;
+}
+
+.demand-tag.tag-secondary {
+  background-color: rgba(255, 152, 0, 0.1);
+  color: #FF9800;
+}
+
+.demand-tag.tag-success {
+  background-color: rgba(76, 175, 80, 0.1);
+  color: #4CAF50;
+}
+
+.demand-description {
+  font-size: 28rpx;
+  color: #666666;
+  margin-bottom: 24rpx;
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.demand-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12rpx;
+}
+
+.demand-location {
+  display: flex;
+  align-items: center;
+  font-size: 24rpx;
+  color: #666666;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.location-icon {
+  width: 24rpx;
+  height: 24rpx;
+  margin-right: 8rpx;
+  flex-shrink: 0;
+}
+
+.demand-time {
+  font-size: 24rpx;
+  color: #999999;
+  flex-shrink: 0;
+}
+
+/* 空状态 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 128rpx 0;
+}
+
+.empty-icon {
+  width: 128rpx;
+  height: 128rpx;
+  margin-bottom: 32rpx;
+  opacity: 0.5;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #999999;
+}
+
+/* 加载更多 */
+.loading-more {
+  text-align: center;
+  padding: 32rpx 0;
+  font-size: 24rpx;
+  color: #999999;
+}
+
+.provider-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 24rpx 32rpx;
+  padding: 24rpx 32rpx;
+  background: linear-gradient(135deg, #E3F2FD, #BBDEFB);
+  border-radius: 16rpx;
+  box-shadow: 0 2rpx 8rpx rgba(30, 136, 229, 0.15);
+}
+
+.provider-banner:active {
+  opacity: 0.85;
+}
+
+.provider-banner-content {
+  display: flex;
+  align-items: center;
+}
+
+.provider-banner-icon {
+  width: 36rpx;
+  height: 36rpx;
+  margin-right: 16rpx;
+}
+
+.provider-banner-text {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #1565C0;
+}
+
+.provider-banner-arrow {
+  font-size: 36rpx;
+  color: #1E88E5;
+  font-weight: 300;
+}
+
+.demand-meta {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
+  flex-wrap: wrap;
+  gap: 12rpx;
+}
+
+.demand-appliance-type {
+  display: inline-flex;
+}
+
+.appliance-tag {
+  padding: 4rpx 16rpx;
+  font-size: 22rpx;
+  color: #666666;
+  background-color: #F5F5F5;
+  border-radius: 8rpx;
+}
+
+.demand-distance {
+  margin-left: 10rpx;
+  color: #1E88E5;
+  font-size: 22rpx;
+  background-color: #E3F2FD;
+  padding: 2rpx 10rpx;
+  border-radius: 10rpx;
+  flex-shrink: 0;
+}

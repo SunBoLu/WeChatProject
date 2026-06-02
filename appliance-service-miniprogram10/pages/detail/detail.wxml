@@ -1,0 +1,225 @@
+<!-- detail.wxml -->
+<view class="container">
+  <view class="detail-card">
+    <view class="detail-header">
+      <view class="detail-title">{{demand.title}}</view>
+      <view class="detail-tag {{getTagClass(demand.type)}}">{{getTagText(demand.type)}}</view>
+    </view>
+    <view class="detail-description">{{demand.description}}</view>
+    <view class="detail-info">
+      <view class="info-item" wx:if="{{demand.applianceType}}">
+        <image src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/53595b6c57584a728fc407a8e700545c~tplv-a9rns2rl98-image.image?lk3s=8e244e95&rcl=2026040114542862841A149A1450CE3E0A&rrcfp=f06b921b&x-expires=1777618534&x-signature=ZScEoZRgROoNgq8qXouyTOBIPjQ%3D" class="info-icon"></image>
+        <text>家电类型: {{demand.applianceType}}</text>
+      </view>
+      <view class="info-item">
+        <image src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/53595b6c57584a728fc407a8e700545c~tplv-a9rns2rl98-image.image?lk3s=8e244e95&rcl=2026040114542862841A149A1450CE3E0A&rrcfp=f06b921b&x-expires=1777618534&x-signature=ZScEoZRgROoNgq8qXouyTOBIPjQ%3D" class="info-icon"></image>
+        <text>{{demand.address}}</text>
+      </view>
+      <view class="info-item">
+        <image src="https://p26-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/bb1b62fcd078444fb19b2ab5ac3a667e~tplv-a9rns2rl98-image.image?lk3s=8e244e95&rcl=2026040114542862841A149A1450CE3E0A&rrcfp=f06b921b&x-expires=1777618534&x-signature=GtLnhS9z5D5bUj6j9hH04pHJuiQ%3D" class="info-icon"></image>
+        <text>{{formatDate(demand.createdAt)}}</text>
+      </view>
+      <view class="info-item">
+        <text class="status-text status-{{demand.status}}">{{getStatusText(demand.status)}}</text>
+      </view>
+    </view>
+
+    <view class="final-amount-section" wx:if="{{demand.finalAmount > 0}}">
+      <view class="final-amount-label">最终服务金额</view>
+      <view class="final-amount-value">¥{{demand.finalAmount}}</view>
+    </view>
+  </view>
+
+  <view class="contact-card">
+    <view class="card-title">联系人信息</view>
+    <view class="contact-info">
+      <view class="contact-item">
+        <text class="contact-label">联系人</text>
+        <text class="contact-value">{{demand.contactName}}</text>
+      </view>
+      <view class="contact-item">
+        <text class="contact-label">联系电话</text>
+        <text class="contact-value">{{maskPhone(demand.contactPhone)}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="provider-card" wx:if="{{demand.status !== 'pending' && provider}}">
+    <view class="card-title">服务方信息</view>
+    <view class="provider-info">
+      <view class="provider-avatar">
+        <image src="{{provider.avatar || 'https://p26-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/a33c806e018049f9accc4f8f874e5cc3~tplv-a9rns2rl98-image.image?lk3s=8e244e95&rcl=2026040114542862841A149A1450CE3E0A&rrcfp=f06b921b&x-expires=1777618535&x-signature=1wU7uc6n7x%2BzoVT2vyNhLIvFOao%3D'}}" mode="aspectFill"></image>
+      </view>
+      <view class="provider-details">
+        <view class="provider-name">{{provider.name || '服务师傅'}}</view>
+        <view class="provider-rating">
+          <view class="stars">
+            <image wx:for="{{[1,2,3,4,5]}}" wx:key="index" src="{{index < providerRating ? 'https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/7173546525c940b39ea5887350583444~tplv-a9rns2rl98-image.image?lk3s=8e244e95&rcl=2026040114542862841A149A1450CE3E0A&rrcfp=f06b921b&x-expires=1777618583&x-signature=c%2BqHphVsuSaJhFIyM3jVlsfFBwM%3D' : 'https://p11-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/67e1c25f74624b219b0704db975565b0~tplv-a9rns2rl98-image.image?lk3s=8e244e95&rcl=2026040114542862841A149A1450CE3E0A&rrcfp=f06b921b&x-expires=1777618583&x-signature=sypNTRl7kQuXPGR6CHR2LkhBibo%3D'}}" class="star-icon"></image>
+          </view>
+          <text class="rating-text">{{providerRating}}分</text>
+        </view>
+      </view>
+    </view>
+    <view class="provider-stats">
+      <view class="stat-item">
+        <text class="stat-label">手机号</text>
+        <text class="stat-value">{{maskPhone(provider.phone)}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="qr-code-card" wx:if="{{isAdmin && (demand.status === 'accepted' || demand.status === 'in_service' || demand.status === 'completed' || demand.status === 'paid' || demand.status === 'rated')}}">
+    <view class="card-title">发布方信息（管理员可见）</view>
+    <view class="qr-info" wx:if="{{publisher}}">
+      <view class="qr-info-item">
+        <text class="qr-label">姓名:</text>
+        <text class="qr-value">{{publisher.name}}</text>
+      </view>
+      <view class="qr-info-item">
+        <text class="qr-label">手机:</text>
+        <text class="qr-value">{{publisher.phone}}</text>
+      </view>
+      <view class="qr-info-item" wx:if="{{publisher.address}}">
+        <text class="qr-label">地址:</text>
+        <text class="qr-value">{{publisher.address}}</text>
+      </view>
+      <view class="qr-code-wrapper" wx:if="{{publisher.payment_qr_code}}">
+        <text class="qr-label">收款二维码:</text>
+        <image src="{{publisher.payment_qr_code}}" class="qr-code-image" mode="widthFix"></image>
+      </view>
+    </view>
+    <view class="qr-empty" wx:else>
+      <text>暂无发布方信息</text>
+    </view>
+
+    <view class="qr-divider" wx:if="{{provider}}"></view>
+
+    <view class="card-title" wx:if="{{provider}}">服务方信息（管理员可见）</view>
+    <view class="qr-info" wx:if="{{provider}}">
+      <view class="qr-info-item">
+        <text class="qr-label">姓名:</text>
+        <text class="qr-value">{{provider.name}}</text>
+      </view>
+      <view class="qr-info-item">
+        <text class="qr-label">手机:</text>
+        <text class="qr-value">{{provider.phone}}</text>
+      </view>
+      <view class="qr-info-item" wx:if="{{provider.address}}">
+        <text class="qr-label">地址:</text>
+        <text class="qr-value">{{provider.address}}</text>
+      </view>
+      <view class="qr-code-wrapper" wx:if="{{provider.payment_qr_code}}">
+        <text class="qr-label">收款二维码:</text>
+        <image src="{{provider.payment_qr_code}}" class="qr-code-image" mode="widthFix"></image>
+      </view>
+    </view>
+  </view>
+
+  <view class="action-buttons">
+    <view class="btn-group" wx:if="{{(demand.status === 'accepted' || demand.status === 'in_service') && (userInfo && userInfo.role === 'demander')}}">
+      <button class="btn btn-outline" bindtap="contactUser">
+        <image src="https://p26-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/79b35ebabe4349bbaca5ea43ecefc64b~tplv-a9rns2rl98-image.image?lk3s=8e244e95&rcl=2026040114542862841A149A1450CE3E0A&rrcfp=f06b921b&x-expires=1777618583&x-signature=xIahic8M8hT1tzyedmPPgRh5GJk%3D" class="btn-icon"></image>
+        <text>联系服务方</text>
+      </button>
+      <button class="btn btn-outline" bindtap="openChat">
+        <image src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/f9bc2e97c6e242d4a97782b17a97d984~tplv-a9rns2rl98-image.image?lk3s=8e244e95&rcl=2026040114542862841A149A1450CE3E0A&rrcfp=f06b921b&x-expires=1777618585&x-signature=oJMVBF%2BN6ygXfLOoiLinjvOvYw%3D" class="btn-icon"></image>
+        <text>在线沟通</text>
+      </button>
+    </view>
+
+    <view class="btn-group" wx:if="{{demand.status === 'completed' && (userInfo && userInfo.role === 'demander')}}">
+      <button class="btn btn-outline" bindtap="contactUser">
+        <image src="https://p26-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/79b35ebabe4349bbaca5ea43ecefc64b~tplv-a9rns2rl98-image.image?lk3s=8e244e95&rcl=2026040114542862841A149A1450CE3E0A&rrcfp=f06b921b&x-expires=1777618583&x-signature=xIahic8M8hT1tzyedmPPgRh5GJk%3D" class="btn-icon"></image>
+        <text>联系服务方</text>
+      </button>
+      <button class="btn btn-outline" bindtap="openChat">
+        <image src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/f9bc2e97c6e242d4a97782b17a97d984~tplv-a9rns2rl98-image.image?lk3s=8e244e95&rcl=2026040114542862841A149A1450CE3E0A&rrcfp=f06b921b&x-expires=1777618585&x-signature=oJMVBF%2BN6ygXfLOoiLinjvOvYw%3D" class="btn-icon"></image>
+        <text>在线沟通</text>
+      </button>
+      <button class="btn btn-primary" bindtap="payService">确认支付</button>
+    </view>
+
+    <view class="btn-group" wx:if="{{(demand.status === 'paid' || demand.status === 'rated') && (userInfo && userInfo.role === 'demander')}}">
+      <button class="btn btn-outline" bindtap="contactUser">
+        <image src="https://p26-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/79b35ebabe4349bbaca5ea43ecefc64b~tplv-a9rns2rl98-image.image?lk3s=8e244e95&rcl=2026040114542862841A149A1450CE3E0A&rrcfp=f06b921b&x-expires=1777618583&x-signature=xIahic8M8hT1tzyedmPPgRh5GJk%3D" class="btn-icon"></image>
+        <text>联系服务方</text>
+      </button>
+      <button class="btn btn-outline" bindtap="openChat" wx:if="{{demand.status === 'paid'}}">
+        <image src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/f9bc2e97c6e242d4a97782b17a97d984~tplv-a9rns2rl98-image.image?lk3s=8e244e95&rcl=2026040114542862841A149A1450CE3E0A&rrcfp=f06b921b&x-expires=1777618585&x-signature=oJMVBF%2BN6ygXfLOoiLinjvOvYw%3D" class="btn-icon"></image>
+        <text>在线沟通</text>
+      </button>
+      <button class="btn btn-primary" bindtap="navigateToRating" wx:if="{{demand.status === 'paid'}}">评价服务</button>
+    </view>
+
+    <block wx:if="{{userInfo && userInfo.role === 'serviceProvider'}}">
+      <view class="delete-button-container" wx:if="{{demand.status === 'pending' && userInfo && userInfo.userId === demand.publisherId}}">
+        <button class="btn btn-outline delete-button" bindtap="showDeleteModal">
+          <text>删除需求</text>
+        </button>
+      </view>
+
+      <button class="btn btn-secondary" wx:if="{{canAccept}}" bindtap="showAcceptModal">接单</button>
+
+      <view class="btn-group" wx:elif="{{demand.status === 'accepted'}}">
+        <button class="btn btn-outline" bindtap="contactUser">
+          <image src="https://p26-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/79b35ebabe4349bbaca5ea43ecefc64b~tplv-a9rns2rl98-image.image?lk3s=8e244e95&rcl=2026040114542862841A149A1450CE3E0A&rrcfp=f06b921b&x-expires=1777618583&x-signature=xIahic8M8hT1tzyedmPPgRh5GJk%3D" class="btn-icon"></image>
+          <text>联系需求方</text>
+        </button>
+        <button class="btn btn-outline" bindtap="openChat">
+          <image src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/f9bc2e97c6e242d4a97782b17a97d984~tplv-a9rns2rl98-image.image?lk3s=8e244e95&rcl=2026040114542862841A149A1450CE3E0A&rrcfp=f06b921b&x-expires=1777618585&x-signature=oJMVBF%2BN6ygXfLOoiLinjvOvYw%3D" class="btn-icon"></image>
+          <text>在线沟通</text>
+        </button>
+        <button class="btn btn-outline" bindtap="showSetFinalAmountModal" wx:if="{{canSetFinalAmount}}">设置金额</button>
+        <button class="btn btn-outline" disabled="true" wx:else>已设置金额</button>
+        <button class="btn btn-primary" bindtap="startService" wx:if="{{canStartService}}">开始服务</button>
+        <button class="btn btn-primary" disabled="true" wx:else>请先设置金额</button>
+      </view>
+
+      <view class="btn-group" wx:elif="{{demand.status === 'in_service'}}">
+        <button class="btn btn-outline" bindtap="contactUser">
+          <image src="https://p26-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/79b35ebabe4349bbaca5ea43ecefc64b~tplv-a9rns2rl98-image.image?lk3s=8e244e95&rcl=2026040114542862841A149A1450CE3E0A&rrcfp=f06b921b&x-expires=1777618583&x-signature=xIahic8M8hT1tzyedmPPgRh5GJk%3D" class="btn-icon"></image>
+          <text>联系需求方</text>
+        </button>
+        <button class="btn btn-outline" bindtap="openChat">
+          <image src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/f9bc2e97c6e242d4a97782b17a97d984~tplv-a9rns2rl98-image.image?lk3s=8e244e95&rcl=2026040114542862841A149A1450CE3E0A&rrcfp=f06b921b&x-expires=1777618585&x-signature=oJMVBF%2BN6ygXfLOoiLinjvOvYw%3D" class="btn-icon"></image>
+          <text>在线沟通</text>
+        </button>
+        <button class="btn btn-outline" bindtap="showSetFinalAmountModal" wx:if="{{canSetFinalAmount}}">设置金额</button>
+        <button class="btn btn-outline" disabled="true" wx:else>已设置金额</button>
+        <button class="btn btn-primary" bindtap="completeService">完成服务</button>
+      </view>
+
+      <view class="status-indicator" wx:else>
+        <view class="status-item {{demand.status === 'pending' ? 'active' : ''}} pending-status">
+          <text>等待接单</text>
+        </view>
+        <view class="status-item {{demand.status === 'accepted' || demand.status === 'in_service' ? 'active' : ''}} accepted-status">
+          <text>服务中</text>
+        </view>
+        <view class="status-item {{demand.status === 'completed' || demand.status === 'paid' || demand.status === 'rated' ? 'active' : ''}} completed-status">
+          <text>已完成</text>
+        </view>
+      </view>
+    </block>
+
+    <view wx:else>
+      <view class="delete-button-container" wx:if="{{demand.status === 'pending' && userInfo && userInfo.userId === demand.publisherId}}">
+        <button class="btn btn-outline delete-button" bindtap="showDeleteModal">
+          <text>删除需求</text>
+        </button>
+      </view>
+
+      <view class="status-indicator">
+        <view class="status-item {{demand.status === 'pending' ? 'active' : ''}} pending-status">
+          <text>等待接单</text>
+        </view>
+        <view class="status-item {{demand.status === 'accepted' || demand.status === 'in_service' ? 'active' : ''}} accepted-status">
+          <text>服务中</text>
+        </view>
+        <view class="status-item {{demand.status === 'completed' || demand.status === 'paid' || demand.status === 'rated' ? 'active' : ''}} completed-status">
+          <text>已完成</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
