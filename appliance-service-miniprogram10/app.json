@@ -1,0 +1,62 @@
+{
+  "pages": [
+    "pages/auth/auth",
+    "pages/home/home",
+    "pages/publish/publish",
+    "pages/detail/detail",
+    "pages/chat/chat",
+    "pages/profile/profile",
+    "pages/rating/rating",
+    "pages/message/message",
+    "pages/demands/demands",
+    "pages/pending/pending",
+    "pages/accepted/accepted",
+    "pages/ongoing/ongoing",
+    "pages/completed/completed",
+    "pages/report/report",
+    "pages/feedback/feedback",
+    "pages/admin/admin-home",
+    "pages/admin/admin-profile",
+    "pages/admin/feedback-manage",
+    "pages/admin/user-manage",
+    "pages/provider-list/provider-list"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#1E88E5",
+    "navigationBarTitleText": "坏来好修理",
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#1E88E5",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/home/home",
+        "text": "首页",
+        "iconPath": "images/home.png",
+        "selectedIconPath": "images/home-active.png"
+      },
+      {
+        "pagePath": "pages/publish/publish",
+        "text": "发布",
+        "iconPath": "images/publish.png",
+        "selectedIconPath": "images/publish-active.png"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的",
+        "iconPath": "images/profile.png",
+        "selectedIconPath": "images/profile-active.png"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "permission": {
+    "scope.userLocation": {
+      "desc": "您的位置信息将用于展示附近的服务需求"
+    }
+  }
+}
