@@ -1,0 +1,168 @@
+/* admin.wxss */
+
+.container {
+  min-height: 100vh;
+  background-color: #F5F5F5;
+  padding: 24rpx;
+  padding-bottom: 100rpx;
+}
+
+.section {
+  background-color: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 32rpx;
+  margin-bottom: 24rpx;
+  box-shadow: 0 4rpx 6rpx rgba(0, 0, 0, 0.05);
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: 500;
+  color: #333333;
+  margin-bottom: 24rpx;
+}
+
+/* 订单列表 */
+.order-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.order-item {
+  background-color: #F9F9F9;
+  border-radius: 8rpx;
+  padding: 24rpx;
+  border-left: 4rpx solid #1E88E5;
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16rpx;
+}
+
+.order-title {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #333333;
+  flex: 1;
+  margin-right: 16rpx;
+}
+
+.order-status {
+  font-size: 24rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 4rpx;
+  background-color: #E3F2FD;
+  color: #1E88E5;
+}
+
+.order-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+  margin-bottom: 16rpx;
+}
+
+.order-info text {
+  font-size: 24rpx;
+  color: #666666;
+}
+
+.delete-btn {
+  width: 100%;
+  padding: 16rpx;
+  background-color: #E53935;
+  color: #FFFFFF;
+  font-size: 24rpx;
+  border-radius: 8rpx;
+  margin-top: 12rpx;
+}
+
+/* 添加管理员表单 */
+.add-admin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.input {
+  width: 100%;
+  padding: 28rpx 24rpx;
+  background-color: #F9F9F9;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  border: 1rpx solid #EEEEEE;
+  box-sizing: border-box;
+  height: 80rpx;
+  line-height: 80rpx;
+}
+
+.placeholder {
+  color: #999999;
+  font-size: 24rpx;
+}
+
+.add-btn {
+  width: 100%;
+  background-color: #4CAF50;
+  color: #FFFFFF;
+  font-size: 28rpx;
+  border-radius: 8rpx;
+  margin-top: 16rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 管理员列表 */
+.admin-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.admin-item {
+  background-color: #F9F9F9;
+  border-radius: 8rpx;
+  padding: 24rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.admin-name {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #333333;
+}
+
+.admin-phone {
+  font-size: 24rpx;
+  color: #666666;
+}
+
+/* 空提示 */
+.empty-tip {
+  text-align: center;
+  padding: 48rpx;
+  color: #999999;
+  font-size: 24rpx;
+  background-color: #F9F9F9;
+  border-radius: 8rpx;
+}
+
+.logout-btn {
+  width: 100%;
+  padding: 24rpx;
+  background-color: #9E9E9E;
+  color: #FFFFFF;
+  font-size: 28rpx;
+  border-radius: 8rpx;
+  margin-top: 24rpx;
+  margin-bottom: 48rpx;
+}

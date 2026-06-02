@@ -1,0 +1,59 @@
+<!-- admin.wxml -->
+<view class="container">
+  <view class="section">
+    <view class="section-title">订单管理</view>
+    <view class="order-list">
+      <view class="order-item" wx:for="{{orders}}" wx:key="id">
+        <view class="order-header">
+          <text class="order-title">{{item.title}}</text>
+          <text class="order-status">{{getStatusText(item.status)}}</text>
+        </view>
+        <view class="order-info">
+          <text>发布者: {{item.contactInfo.name}}</text>
+          <text>联系电话: {{item.contactInfo.phone}}</text>
+          <text>发布时间: {{formatDate(item.createdAt)}}</text>
+        </view>
+        <button class="delete-btn" bindtap="deleteOrder" data-order-id="{{item.id}}">删除订单</button>
+      </view>
+      <view class="empty-tip" wx:if="{{orders.length === 0}}">
+        暂无订单
+      </view>
+    </view>
+  </view>
+  
+  <view class="section">
+    <view class="section-title">添加管理员</view>
+    <view class="add-admin-form">
+      <input 
+        class="input" 
+        placeholder="请输入管理员手机号" 
+        value="{{adminPhone}}" 
+        bindinput="bindAdminPhoneInput"
+        placeholder-class="placeholder"
+      />
+      <input 
+        class="input" 
+        placeholder="请输入管理员姓名" 
+        value="{{adminName}}" 
+        bindinput="bindAdminNameInput"
+        placeholder-class="placeholder"
+      />
+      <button class="add-btn" bindtap="addAdmin">添加管理员</button>
+    </view>
+  </view>
+  
+  <view class="section">
+    <view class="section-title">管理员列表</view>
+    <view class="admin-list">
+      <view class="admin-item" wx:for="{{adminUsers}}" wx:key="userId">
+        <text class="admin-name">{{item.name}}</text>
+        <text class="admin-phone">{{item.phone}}</text>
+      </view>
+      <view class="empty-tip" wx:if="{{adminUsers.length === 0}}">
+        暂无管理员
+      </view>
+    </view>
+  </view>
+  
+  <button class="logout-btn" bindtap="logout">退出登录</button>
+</view>

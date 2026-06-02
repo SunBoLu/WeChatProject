@@ -1,0 +1,86 @@
+<view class="container">
+  <view class="header">
+    <text class="header-title">坏来好修理</text>
+    <text class="header-subtitle">家电维修安装清洗服务平台</text>
+  </view>
+
+  <view class="form-container">
+    <view class="role-selector">
+      <view class="role-option {{role === 'demander' ? 'active' : ''}}" bindtap="onRoleChange" data-value="demander">
+        <text>需求方</text>
+      </view>
+      <view class="role-option {{role === 'serviceProvider' ? 'active' : ''}}" bindtap="onRoleChange" data-value="serviceProvider">
+        <text>服务方</text>
+      </view>
+    </view>
+
+    <view class="input-group">
+      <text class="input-label">手机号</text>
+      <input class="input-field" type="number" placeholder="请输入手机号" value="{{phone}}" bindinput="onPhoneInput" maxlength="11"/>
+    </view>
+
+    <view class="input-group code-group">
+      <text class="input-label">验证码</text>
+      <input class="input-field code-input" type="number" placeholder="请输入验证码" value="{{code}}" bindinput="onCodeInput" maxlength="6"/>
+      <button class="code-btn {{countdown > 0 ? 'disabled' : ''}}" bindtap="sendCode" disabled="{{countdown > 0}}">{{codeBtnText}}</button>
+    </view>
+
+    <button class="login-btn" bindtap="login">登录</button>
+
+    <view class="divider">
+      <text class="divider-text">其他方式登录</text>
+    </view>
+
+    <button class="wechat-btn" bindtap="wechatLogin">
+      <text>微信一键注册登录</text>
+    </button>
+  </view>
+</view>
+
+<view class="modal-overlay" wx:if="{{showWelcome}}">
+  <view class="modal-container welcome-modal">
+    <view class="modal-title">欢迎使用坏来好修理线上服务！</view>
+    <scroll-view class="modal-scroll" scroll-y>
+      <text class="modal-text">首次使用需要注册账号，推荐您使用微信注册登录，手机号注册登录正在加入中，敬请期待！</text>
+      <text class="modal-text">以下是使用说明：</text>
+      <text class="modal-text">注册登录时可以选择您的角色，需求方表示您可以发布维修与安装订单，发布后等待服务方接单；服务方表示您可以进行接单。</text>
+      <text class="modal-text modal-warning">重要提示：多次发布虚假订单之后会对账号进行封禁操作，如您对服务方的服务不满意可以进行反馈，我们会及时处理。</text>
+    </scroll-view>
+    <button class="modal-btn" bindtap="closeWelcome">确认并继续</button>
+  </view>
+</view>
+
+<view class="modal-overlay" wx:if="{{showInfoCollect}}">
+  <view class="modal-container info-modal">
+    <view class="modal-title">完善个人信息</view>
+    <scroll-view class="modal-scroll" scroll-y>
+      <view class="info-item">
+        <text class="info-label">您的地址</text>
+        <view class="info-input-row">
+          <input class="input-field" placeholder="请输入您的地址" value="{{infoAddress}}" bindinput="onInfoAddressInput"/>
+          <button class="location-btn" bindtap="chooseLocation">地图选地址</button>
+        </view>
+      </view>
+
+      <view class="info-item" wx:if="{{role === 'serviceProvider'}}">
+        <text class="info-label">联系电话</text>
+        <input class="input-field" type="number" placeholder="请输入联系电话" value="{{infoPhone}}" bindinput="onInfoPhoneInput" maxlength="11"/>
+        <text class="info-hint">用于需求方和平台与您联系</text>
+      </view>
+
+      <view class="info-item">
+        <text class="info-label">微信收款码</text>
+        <view class="qr-upload" bindtap="chooseQrCode">
+          <image wx:if="{{infoQrCode}}" class="qr-preview" src="{{infoQrCode}}" mode="aspectFit"/>
+          <view wx:else class="qr-placeholder">
+            <text class="qr-placeholder-icon">+</text>
+            <text class="qr-placeholder-text">请先将您的微信收款码保存至相册，在此选择您的收款码</text>
+            <text class="qr-placeholder-desc" wx:if="{{role === 'demander'}}">用于退款服务</text>
+            <text class="qr-placeholder-desc" wx:else>用于订单结算支付</text>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+    <button class="modal-btn" bindtap="submitInfoCollect">确认提交</button>
+  </view>
+</view>

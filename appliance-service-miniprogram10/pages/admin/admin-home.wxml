@@ -1,0 +1,93 @@
+<!-- admin-home.wxml -->
+<view class="container">
+  <view class="header">
+    <text class="header-title">订单管理</text>
+    <text class="header-subtitle">管理员系统</text>
+  </view>
+  
+  <!-- 底部导航 -->
+  <view class="admin-tab-bar">
+    <view class="tab-item active" bindtap="switchToHome">
+      <text class="tab-icon">📋</text>
+      <text class="tab-text">订单管理</text>
+    </view>
+    <view class="tab-item" bindtap="switchToFeedback">
+      <text class="tab-icon">⚖️</text>
+      <text class="tab-text">反馈举报</text>
+    </view>
+    <view class="tab-item" bindtap="switchToUserManage">
+      <text class="tab-icon">👥</text>
+      <text class="tab-text">用户管理</text>
+    </view>
+    <view class="tab-item" bindtap="switchToProfile">
+      <text class="tab-icon">👤</text>
+      <text class="tab-text">管理员管理</text>
+    </view>
+  </view>
+  
+  <view class="search-bar">
+    <input 
+      class="search-input" 
+      placeholder="搜索订单..." 
+      value="{{searchKeyword}}" 
+      bindinput="bindSearchInput"
+      placeholder-class="placeholder"
+    />
+    <button class="search-btn" bindtap="searchOrder">搜索</button>
+  </view>
+  
+  <view class="filter-bar">
+    <view 
+      class="filter-item {{activeFilter === 'all' ? 'active' : ''}}" 
+      bindtap="setFilter"
+      data-filter="all"
+    >
+      全部
+    </view>
+    <view 
+      class="filter-item {{activeFilter === 'pending' ? 'active' : ''}}" 
+      bindtap="setFilter"
+      data-filter="pending"
+    >
+      待接单
+    </view>
+    <view 
+      class="filter-item {{activeFilter === 'accepted' ? 'active' : ''}}" 
+      bindtap="setFilter"
+      data-filter="accepted"
+    >
+      已接单
+    </view>
+    <view 
+      class="filter-item {{activeFilter === 'completed' ? 'active' : ''}}" 
+      bindtap="setFilter"
+      data-filter="completed"
+    >
+      已完成
+    </view>
+  </view>
+  
+  <view class="order-list">
+    <view class="order-item" wx:for="{{filteredOrders}}" wx:key="id">
+      <view class="order-header">
+        <text class="order-title">{{item.title}}</text>
+        <text class="order-status">{{getStatusText(item.status)}}</text>
+      </view>
+      <view class="order-info">
+        <text>发布者: {{item.contactInfo.name}}</text>
+        <text>联系电话: {{item.contactInfo.phone}}</text>
+        <text>发布时间: {{formatDate(item.createdAt)}}</text>
+        <text wx:if="item.serviceProvider">服务方: {{item.serviceProvider.name}}</text>
+        <text wx:if="item.serviceProvider">服务方电话: {{item.serviceProvider.phone}}</text>
+        <text wx:if="item.finalAmount > 0">最终金额: ¥{{item.finalAmount}}</text>
+      </view>
+      <view class="order-actions">
+        <button class="detail-btn" bindtap="viewOrderDetail" data-order-id="{{item.id}}">查看详情</button>
+        <button class="delete-btn" bindtap="deleteOrder" data-order-id="{{item.id}}">删除订单</button>
+      </view>
+    </view>
+    <view class="empty-tip" wx:if="filteredOrders.length === 0">
+      暂无订单
+    </view>
+  </view>
+</view>

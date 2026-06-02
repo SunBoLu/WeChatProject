@@ -1,0 +1,155 @@
+<!-- feedback-manage.wxml -->
+<view class="container">
+  <view class="header">
+    <text class="header-title">反馈举报管理</text>
+    <text class="header-subtitle">管理员系统</text>
+  </view>
+  
+  <!-- 筛选标签 -->
+  <view class="filter-bar">
+    <view 
+      class="filter-item {{activeTab === 'all' ? 'active' : ''}}" 
+      bindtap="switchTab"
+      data-tab="all"
+    >
+      全部
+    </view>
+    <view 
+      class="filter-item {{activeTab === 'feedback' ? 'active' : ''}}" 
+      bindtap="switchTab"
+      data-tab="feedback"
+    >
+      反馈
+    </view>
+    <view 
+      class="filter-item {{activeTab === 'report' ? 'active' : ''}}" 
+      bindtap="switchTab"
+      data-tab="report"
+    >
+      举报
+    </view>
+  </view>
+  
+  <!-- 状态筛选 -->
+  <view class="status-filter">
+    <view 
+      class="status-item {{activeStatus === 'all' ? 'active' : ''}}" 
+      bindtap="setStatusFilter"
+      data-status="all"
+    >
+      全部
+    </view>
+    <view 
+      class="status-item {{activeStatus === 'pending' ? 'active' : ''}}" 
+      bindtap="setStatusFilter"
+      data-status="pending"
+    >
+      待处理
+    </view>
+    <view 
+      class="status-item {{activeStatus === 'processed' ? 'active' : ''}}" 
+      bindtap="setStatusFilter"
+      data-status="processed"
+    >
+      已处理
+    </view>
+    <view 
+      class="status-item {{activeStatus === 'rejected' ? 'active' : ''}}" 
+      bindtap="setStatusFilter"
+      data-status="rejected"
+    >
+      已驳回
+    </view>
+  </view>
+  
+  <!-- 列表 -->
+  <view class="list">
+    <!-- 反馈列表 -->
+    <view wx:if="{{activeTab === 'all' || activeTab === 'feedback'}}">
+      <view class="item feedback-item" wx:for="{{filteredFeedbacks}}" wx:key="id">
+        <view class="item-header">
+          <text class="item-type feedback-type">反馈</text>
+          <text class="item-status status-{{item.status}}">{{getStatusText(item.status)}}</text>
+        </view>
+        <view class="item-content">
+          <text class="content-label">需求方：</text>
+          <text class="content-value">{{item.demanderName}}</text>
+        </view>
+        <view class="item-content">
+          <text class="content-label">服务方：</text>
+          <text class="content-value">{{item.providerName}}</text>
+        </view>
+        <view class="item-content">
+          <text class="content-label">反馈内容：</text>
+          <text class="content-value">{{item.problem}}</text>
+        </view>
+        <view class="item-content">
+          <text class="content-label">提交时间：</text>
+          <text class="content-value">{{formatDate(item.createdAt)}}</text>
+        </view>
+        <view class="item-actions" wx:if="{{item.status === 'pending'}}">
+          <button class="action-btn reject-btn" bindtap="handleFeedback" data-id="{{item.id}}" data-action="reject">驳回</button>
+          <button class="action-btn process-btn" bindtap="handleFeedback" data-id="{{item.id}}" data-action="process">处理</button>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 举报列表 -->
+    <view wx:if="{{activeTab === 'all' || activeTab === 'report'}}">
+      <view class="item report-item" wx:for="{{filteredReports}}" wx:key="id">
+        <view class="item-header">
+          <text class="item-type report-type">举报</text>
+          <text class="item-status status-{{item.status}}">{{getStatusText(item.status)}}</text>
+        </view>
+        <view class="item-content">
+          <text class="content-label">举报者：</text>
+          <text class="content-value">{{item.reporterName}}</text>
+        </view>
+        <view class="item-content">
+          <text class="content-label">订单：</text>
+          <text class="content-value">{{item.orderTitle}}</text>
+        </view>
+        <view class="item-content">
+          <text class="content-label">需求方：</text>
+          <text class="content-value">{{item.demanderName}}</text>
+        </view>
+        <view class="item-content">
+          <text class="content-label">举报理由：</text>
+          <text class="content-value">{{item.reason}}</text>
+        </view>
+        <view class="item-content">
+          <text class="content-label">提交时间：</text>
+          <text class="content-value">{{formatDate(item.createdAt)}}</text>
+        </view>
+        <view class="item-actions" wx:if="{{item.status === 'pending'}}">
+          <button class="action-btn reject-btn" bindtap="handleReport" data-id="{{item.id}}" data-action="reject">驳回</button>
+          <button class="action-btn process-btn" bindtap="handleReport" data-id="{{item.id}}" data-action="process">处理</button>
+        </view>
+      </view>
+    </view>
+    
+    <view class="empty-tip" wx:if="{{filteredFeedbacks.length === 0 && filteredReports.length === 0}}">
+      暂无数据
+    </view>
+  </view>
+  
+  <!-- 底部导航 -->
+  <view class="admin-tab-bar">
+    <view class="tab-item" bindtap="switchToHome">
+      <text class="tab-icon">📋</text>
+      <text class="tab-text">订单管理</text>
+    </view>
+    <view class="tab-item active" bindtap="switchToFeedback">
+      <text class="tab-icon">⚖️</text>
+      <text class="tab-text">反馈举报</text>
+    </view>
+    <view class="tab-item" bindtap="switchToUserManage">
+      <text class="tab-icon">👥</text>
+      <text class="tab-text">用户管理</text>
+    </view>
+    <view class="tab-item" bindtap="switchToProfile">
+      <text class="tab-icon">👤</text>
+      <text class="tab-text">管理员管理</text>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,120 @@
+<!-- admin-profile.wxml -->
+<view class="container">
+  <view class="header">
+    <text class="header-title">管理员管理</text>
+    <text class="header-subtitle">管理员系统</text>
+  </view>
+
+  <view class="admin-tab-bar">
+    <view class="tab-item" bindtap="switchToHome">
+      <text class="tab-icon">📋</text>
+      <text class="tab-text">订单管理</text>
+    </view>
+    <view class="tab-item" bindtap="switchToFeedback">
+      <text class="tab-icon">⚖️</text>
+      <text class="tab-text">反馈举报</text>
+    </view>
+    <view class="tab-item active" bindtap="switchToProfile">
+      <text class="tab-icon">👤</text>
+      <text class="tab-text">管理员管理</text>
+    </view>
+  </view>
+
+  <view class="user-info">
+    <view class="avatar">
+      <text class="avatar-text">{{currentAdmin.name.charAt(0)}}</text>
+    </view>
+    <view class="user-details">
+      <text class="user-name">{{currentAdmin.name}}</text>
+      <text class="user-phone">{{currentAdmin.phone}}</text>
+      <text class="user-role">{{isSuperAdmin ? '超级管理员' : '普通管理员'}}</text>
+    </view>
+  </view>
+
+  <view class="section" wx:if="isSuperAdmin">
+    <view class="section-title">添加管理员</view>
+    <view class="add-admin-form">
+      <input
+        class="input"
+        placeholder="请输入管理员手机号"
+        value="{{adminPhone}}"
+        bindinput="bindAdminPhoneInput"
+        placeholder-class="placeholder"
+      />
+      <input
+        class="input"
+        placeholder="请输入管理员姓名"
+        value="{{adminName}}"
+        bindinput="bindAdminNameInput"
+        placeholder-class="placeholder"
+      />
+      <button class="add-btn" bindtap="addAdmin">添加管理员</button>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="section-title">管理员列表</view>
+    <view class="admin-list">
+      <view class="admin-item" wx:for="{{adminUsers}}" wx:key="userId">
+        <view class="admin-info">
+          <text class="admin-name">{{item.name}}</text>
+          <text class="admin-phone">{{item.phone}}</text>
+          <text class="admin-role">{{item.userId === 'admin_1' ? '超级管理员' : '普通管理员'}}</text>
+        </view>
+        <button
+          wx:if="isSuperAdmin && item.userId !== 'admin_1'"
+          class="delete-admin-btn"
+          bindtap="deleteAdmin"
+          data-admin-id="{{item.userId}}"
+        >
+          删除
+        </button>
+      </view>
+      <view class="empty-tip" wx:if="adminUsers.length === 0">
+        暂无管理员
+      </view>
+    </view>
+  </view>
+
+  <view class="section" wx:if="isSuperAdmin">
+    <view class="section-title">设置收款二维码</view>
+    <view class="qr-code-section">
+      <view class="qr-code-preview" wx:if="{{qrCodeImage}}">
+        <image src="{{qrCodeImage}}" class="qr-code-img" mode="widthFix"></image>
+      </view>
+      <view class="qr-code-empty" wx:else>
+        <text class="qr-empty-text">尚未设置收款二维码</text>
+      </view>
+      <button class="upload-qr-btn" bindtap="uploadQrCode">
+        {{qrCodeImage ? '重新上传收款二维码' : '上传收款二维码'}}
+      </button>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="section-title">快捷入口</view>
+    <view class="quick-actions">
+      <button class="quick-btn" bindtap="switchToUserManage">用户管理</button>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="section-title">系统信息</view>
+    <view class="system-info">
+      <view class="info-item">
+        <text class="info-label">管理员总数</text>
+        <text class="info-value">{{adminUsers.length}}</text>
+      </view>
+      <view class="info-item">
+        <text class="info-label">订单总数</text>
+        <text class="info-value">{{orderCount}}</text>
+      </view>
+      <view class="info-item">
+        <text class="info-label">用户总数</text>
+        <text class="info-value">{{userCount}}</text>
+      </view>
+    </view>
+  </view>
+
+  <button class="logout-btn" bindtap="logout">退出登录</button>
+</view>

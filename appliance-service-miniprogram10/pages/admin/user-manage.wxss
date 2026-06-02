@@ -1,0 +1,317 @@
+/* user-manage.wxss */
+
+.container {
+  min-height: 100vh;
+  background-color: #F5F5F5;
+  padding: 24rpx;
+  padding-bottom: 180rpx;
+}
+
+.header {
+  margin-bottom: 32rpx;
+  text-align: center;
+}
+
+.header-title {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 8rpx;
+  display: block;
+}
+
+.header-subtitle {
+  font-size: 24rpx;
+  color: #666666;
+}
+
+.role-tabs {
+  display: flex;
+  gap: 16rpx;
+  margin-bottom: 24rpx;
+}
+
+.role-tabs .tab-item {
+  flex: 1;
+  padding: 20rpx 0;
+  background-color: #FFFFFF;
+  border-radius: 8rpx;
+  font-size: 26rpx;
+  color: #666666;
+  text-align: center;
+  border: 1rpx solid #EEEEEE;
+}
+
+.role-tabs .tab-item.active {
+  background-color: #1E88E5;
+  color: #FFFFFF;
+  border-color: #1E88E5;
+}
+
+.search-bar {
+  display: flex;
+  gap: 16rpx;
+  margin-bottom: 24rpx;
+}
+
+.search-input {
+  flex: 1;
+  padding: 20rpx 24rpx;
+  background-color: #FFFFFF;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  border: 1rpx solid #EEEEEE;
+  box-sizing: border-box;
+  min-height: 72rpx;
+}
+
+.search-btn {
+  padding: 0 32rpx;
+  background-color: #1E88E5;
+  color: #FFFFFF;
+  font-size: 28rpx;
+  border-radius: 8rpx;
+  height: 72rpx;
+  line-height: 72rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.placeholder {
+  color: #999999;
+  font-size: 24rpx;
+}
+
+.user-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.user-item {
+  background-color: #FFFFFF;
+  border-radius: 12rpx;
+  padding: 24rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+  border-left: 4rpx solid #1E88E5;
+}
+
+.user-info {
+  margin-bottom: 16rpx;
+}
+
+.user-name-row {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  margin-bottom: 8rpx;
+}
+
+.user-name {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #333333;
+}
+
+.user-role-tag {
+  font-size: 20rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 4rpx;
+}
+
+.role-demander {
+  background-color: #E3F2FD;
+  color: #1E88E5;
+}
+
+.role-serviceProvider {
+  background-color: #E8F5E8;
+  color: #4CAF50;
+}
+
+.role-admin {
+  background-color: #FFF3E0;
+  color: #FF9800;
+}
+
+.user-detail-row {
+  margin-bottom: 8rpx;
+}
+
+.user-phone {
+  font-size: 24rpx;
+  color: #666666;
+}
+
+.user-status-row {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.user-status {
+  font-size: 20rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 4rpx;
+}
+
+.user-status.normal {
+  background-color: #E8F5E8;
+  color: #4CAF50;
+}
+
+.user-status.banned {
+  background-color: #FFEBEE;
+  color: #F44336;
+}
+
+.warning-count {
+  font-size: 20rpx;
+  color: #FF9800;
+  background-color: #FFF3E0;
+  padding: 4rpx 12rpx;
+  border-radius: 4rpx;
+}
+
+.user-actions {
+  display: flex;
+  gap: 12rpx;
+  padding-top: 16rpx;
+  border-top: 1rpx solid #F0F0F0;
+}
+
+.action-btn {
+  flex: 1;
+  padding: 12rpx 0;
+  font-size: 22rpx;
+  border-radius: 8rpx;
+  height: 56rpx;
+  line-height: 56rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.warn-btn {
+  background-color: #FF9800;
+  color: #FFFFFF;
+}
+
+.unban-btn {
+  background-color: #4CAF50;
+  color: #FFFFFF;
+}
+
+.history-btn {
+  background-color: #F5F5F5;
+  color: #666666;
+  border: 1rpx solid #EEEEEE;
+}
+
+.empty-tip {
+  text-align: center;
+  padding: 64rpx 24rpx;
+  color: #999999;
+  font-size: 24rpx;
+  background-color: #FFFFFF;
+  border-radius: 12rpx;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  width: 600rpx;
+  background-color: #FFFFFF;
+  border-radius: 16rpx;
+  overflow: hidden;
+}
+
+.modal-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #333333;
+  padding: 32rpx;
+  text-align: center;
+  border-bottom: 1rpx solid #F0F0F0;
+}
+
+.modal-body {
+  padding: 32rpx;
+  max-height: 500rpx;
+  overflow-y: auto;
+}
+
+.warning-input {
+  width: 100%;
+  height: 160rpx;
+  padding: 16rpx;
+  background-color: #F9F9F9;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  border: 1rpx solid #EEEEEE;
+  box-sizing: border-box;
+}
+
+.modal-footer {
+  display: flex;
+  gap: 16rpx;
+  padding: 24rpx 32rpx;
+  border-top: 1rpx solid #F0F0F0;
+}
+
+.modal-btn {
+  flex: 1;
+  padding: 20rpx 0;
+  font-size: 28rpx;
+  border-radius: 8rpx;
+  height: 72rpx;
+  line-height: 72rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cancel-btn {
+  background-color: #F5F5F5;
+  color: #666666;
+}
+
+.confirm-btn {
+  background-color: #1E88E5;
+  color: #FFFFFF;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.history-item {
+  padding: 16rpx;
+  background-color: #F9F9F9;
+  border-radius: 8rpx;
+}
+
+.history-reason {
+  font-size: 26rpx;
+  color: #333333;
+  margin-bottom: 8rpx;
+}
+
+.history-time {
+  font-size: 22rpx;
+  color: #999999;
+}

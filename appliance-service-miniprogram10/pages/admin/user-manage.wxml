@@ -1,0 +1,95 @@
+<!-- user-manage.wxml -->
+<view class="container">
+  <view class="header">
+    <text class="header-title">用户管理</text>
+    <text class="header-subtitle">管理员系统</text>
+  </view>
+
+  <view class="role-tabs">
+    <view class="tab-item {{activeRole === 'all' ? 'active' : ''}}" bindtap="setRoleFilter" data-role="all">
+      <text>全部</text>
+    </view>
+    <view class="tab-item {{activeRole === 'demander' ? 'active' : ''}}" bindtap="setRoleFilter" data-role="demander">
+      <text>需求方</text>
+    </view>
+    <view class="tab-item {{activeRole === 'serviceProvider' ? 'active' : ''}}" bindtap="setRoleFilter" data-role="serviceProvider">
+      <text>服务方</text>
+    </view>
+  </view>
+
+  <view class="search-bar">
+    <input
+      class="search-input"
+      placeholder="搜索用户名或手机号"
+      value="{{searchKeyword}}"
+      bindinput="onSearchInput"
+      placeholder-class="placeholder"
+    />
+    <button class="search-btn" bindtap="onSearch">搜索</button>
+  </view>
+
+  <view class="user-list">
+    <view class="user-item" wx:for="{{filteredUsers}}" wx:key="user_id">
+      <view class="user-info">
+        <view class="user-name-row">
+          <text class="user-name">{{item.name}}</text>
+          <text class="user-role-tag role-{{item.role}}">{{getRoleText(item.role)}}</text>
+        </view>
+        <view class="user-detail-row">
+          <text class="user-phone">{{item.phone}}</text>
+        </view>
+        <view class="user-status-row">
+          <text class="user-status {{item.is_banned ? 'banned' : 'normal'}}">{{item.is_banned ? '已禁用' : '正常'}}</text>
+          <text class="warning-count">警告: {{item.warning_count}}次</text>
+        </view>
+      </view>
+      <view class="user-actions">
+        <button class="action-btn warn-btn" bindtap="showWarnModal" data-user-id="{{item.user_id}}">警告</button>
+        <button class="action-btn unban-btn" wx:if="{{item.is_banned}}" bindtap="unbanUser" data-user-id="{{item.user_id}}">解除禁用</button>
+        <button class="action-btn history-btn" bindtap="showHistoryModal" data-user-id="{{item.user_id}}">查看警告历史</button>
+      </view>
+    </view>
+    <view class="empty-tip" wx:if="{{filteredUsers.length === 0}}">
+      暂无用户
+    </view>
+  </view>
+
+  <view class="modal-overlay" wx:if="{{showWarningModal}}" bindtap="hideWarnModal">
+    <view class="modal-content" catchtap="noop">
+      <view class="modal-title">发送警告</view>
+      <view class="modal-body">
+        <textarea
+          class="warning-input"
+          placeholder="请输入警告原因"
+          value="{{warningReason}}"
+          bindinput="onWarningReasonInput"
+          maxlength="200"
+        />
+      </view>
+      <view class="modal-footer">
+        <button class="modal-btn cancel-btn" bindtap="hideWarnModal">取消</button>
+        <button class="modal-btn confirm-btn" bindtap="confirmWarn">确认</button>
+      </view>
+    </view>
+  </view>
+
+  <view class="modal-overlay" wx:if="{{showHistoryModal}}" bindtap="hideHistoryModal">
+    <view class="modal-content" catchtap="noop">
+      <view class="modal-title">警告历史 - {{historyUser.name}}</view>
+      <view class="modal-body">
+        <view class="history-list" wx:if="{{historyUser.warning_history.length > 0}}">
+          <view class="history-item" wx:for="{{historyUser.warning_history}}" wx:key="index" wx:for-index="idx">
+            <view class="history-reason">{{idx + 1}}. {{item.reason || item}}</view>
+            <view class="history-time" wx:if="{{item.time}}">{{formatDate(item.time)}}</view>
+          </view>
+        </view>
+        <view class="empty-tip" wx:else>
+          暂无警告记录
+        </view>
+      </view>
+      <view class="modal-footer">
+        <button class="modal-btn cancel-btn" bindtap="hideHistoryModal">关闭</button>
+      </view>
+    </view>
+  </view>
+</view>
