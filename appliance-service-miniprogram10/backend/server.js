@@ -422,7 +422,7 @@ app.get('/api/messages', async (req, res) => {
       idx++;
     }
 
-    query += ' ORDER BY m.created_at ASC';
+    query += ' ORDER BY m.created_at DESC';
     const result = await pool.query(query, params);
     res.json(result.rows);
   } catch (err) {
