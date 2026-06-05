@@ -151,7 +151,7 @@ app.put('/api/orders/:id', async (req, res) => {
     }
     if (finalAmount !== undefined) {
       query += `, final_amount = $${paramIndex++}`;
-      params.push(finalAmount);
+      params.push(Number(finalAmount));
     }
     if (paymentStatus !== undefined) {
       query += `, payment_status = $${paramIndex++}`;
